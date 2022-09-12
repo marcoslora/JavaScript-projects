@@ -1,0 +1,14 @@
+Terminal Commands
+Mkdir; crear directorio
+Touch crear cualquier documento
+
+
+Git
+Git init; para iniciar la carpeta
+Git status; archivos que están en Git
+Git add <nombre> o . Para agregar todo el directorio
+Git commit -m "Inicial Commit"
+Git log; para ver lo que tiene en el version control
+Git diff <nombre>, miras los cambios que hiciste	
+Git checkout <nombre>; tomas el documento del repositorio
+Git remote add origin <url>
