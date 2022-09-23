@@ -80,12 +80,68 @@ const avgKoalas1 = calcAverage(23, 34, 27);
 
 const checkWinner = function (avgD, avgK) {
     if (avgD >= avgK * 2) {
-        console.log(`Los Dolphins ganaron`);
+        console.log(`Los Dolphins ganaron con ${avgD}`);
     } else if (avgK >=   avgD * 2) {
-        console.log(`Los Koalas Ganaron`);
+        console.log(`Los Koalas ganaron con ${avgK}`);
     } else {
         console.log(`Nadie gano`);
     }
 }
 checkWinner(avgDolphins, avgKoalas)
 checkWinner(avgDolphins1, avgKoalas1)
+
+// Array's
+const friend1 = 'Michael';
+const friend2 = 'Steven';
+const friend3 = 'Peter';
+
+const friends = ['Michael', 'Steven', 'Peter'];
+console.log(friends);
+// Expresion, no una declaracion
+
+const persons = new Array('Michael', 'Steven', 'Peter');
+console.log(friends);
+console.log(friends.length);
+console.log(friends[friends.length - 1]);
+console.log(friends[0]);
+console.log(friends[2]);
+const jonasArray = ['Marcos', 20 + 20, friends]
+console.log(jonasArray[2][1][1])
+friends[2] = 'jay'
+console.log(friends);
+
+const yearss = [1991, 1992, 1993, 1994, 1995];
+
+const age5 = calcAge2(yearss[yearss.length -1]);
+const age6 = [calcAge2(yearss[0]), calcAge2(yearss[1]), calcAge2(yearss[2]), calcAge2(yearss[yearss.length -1])]
+console.log(age5, age6);
+// Agrega al final del array
+friends.push('juan');
+// agrega al principio del array
+friends.unshift('Pedro');
+// Elimina el ultimo elemento
+friends.pop();
+// Elimina 
+friends.shift();
+//array operator
+console.log(friends);
+// devuelve el lugar donde se encuentra el elemento
+console.log(friends.indexOf('jay'));
+// devuelve un boolean si el elemento en la lista strict
+console.log(friends.includes('Steven'));
+console.log(friends.includes('Bob'));
+
+if (friends.includes('Michael')) {
+    console.log(`You have a friend call Michael`);
+}
+
+const calcTip = function (bill) {
+    return bill >= 50 && bill <= 300 ? bill * 0.15 : bill * 0.2;
+}
+
+const bills = [125, 555, 44];
+const tips = [calcTip(bills[0]), calcTip(bills[1]), calcTip(bills[2])];
+const totals = [bills[0] + tips[0], bills[1] + tips[1], bills[2] + tips[2]]
+console.log(bills, tips, totals);
+
+// Objects
