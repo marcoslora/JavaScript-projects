@@ -144,4 +144,50 @@ const tips = [calcTip(bills[0]), calcTip(bills[1]), calcTip(bills[2])];
 const totals = [bills[0] + tips[0], bills[1] + tips[1], bills[2] + tips[2]]
 console.log(bills, tips, totals);
 
+
+const jonasArrays = [
+    'Jonas',
+    'Schmedtmann',
+    20 - 22,
+    'Teacher',
+    ['Michael', 'Steven', 'Peter']
+];
 // Objects
+const jonas = {
+   firstName: 'Jonas',
+   lastName: 'Schmedtman',
+   age: 2022 - 1992,
+   job: 'Teacher',
+   friends: ['Michael', 'Steven', 'Peter']
+};
+const names = 'Name'
+console.log(jonas.lastName);
+console.log(jonas['first' + names]);
+// const interestedIn = prompt("Write something");
+// if(jonas[interestedIn]) {
+//     console.log(jonas[interestedIn]);
+// } else {
+//     console.log('Wrong request')
+// };
+jonas.location = 'Domincican Republic';
+jonas['twitter'] = '@JonasSchmedtman';
+console.log(jonas)
+console.log(`${jonas['firstName']} has ${jonas['friends'].length} friends, and his best friend is called ${jonas['friends'][0]}`)
+const jonas1 = {
+    firstName: 'Jonas',
+    lastName: 'Schmedtman',
+    age: 2022 - 1992,
+    birthYeah: 1993,
+    job: 'Teacher',
+    friends: ['Michael', 'Steven', 'Peter'],
+    hasDriversLicenses: true,
+    calcAge11: function () {
+        return 2022 - this.birthYeah;
+    }
+};
+console.log(jonas1.calcAge11());
+// console.log(jonas1.calcAge11(jonas1.birthYeah));
+// console.log(jonas1['calcAge11'](jonas1['birthYeah']));
+
+// console.log(jonas1.calcAge11(1992));
+// console.log(jonas1['calcAge11'](jonas1['birthYeah']));
