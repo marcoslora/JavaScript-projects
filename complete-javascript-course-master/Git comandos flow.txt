@@ -1,0 +1,7 @@
+git status; para ver los archivos q voy agregar
+git add .; para agregar los archivos cambiados al proyecto
+git status; q los archivos fueron agregados
+git commit -m; 'Comentario para guardas los cambios'
+git status; para ver que ya se guardaron local
+git push; para subir los cambios al repositorio
+git pull;
