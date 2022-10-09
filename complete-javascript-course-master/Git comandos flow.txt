@@ -4,4 +4,4 @@ git status; q los archivos fueron agregados
 git commit -m; 'Comentario para guardas los cambios'
 git status; para ver que ya se guardaron local
 git push; para subir los cambios al repositorio
-git pull;
+git pull; para traer los archivos
