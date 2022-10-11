@@ -1,4 +1,4 @@
-import {saveTask, getTasks, onGetTasks, deleteTasks} from './db.js'
+import {saveTask, getTasks, onGetTasks, deleteTasks, getTask} from './db.js'
 
 const taskscontainer = document.getElementById('tasks-container')
 // querysnapshot los datos que existen en ese momento como es asincrono tiene q esperar los datos con un promesa
@@ -11,7 +11,7 @@ window.addEventListener('DOMContentLoaded', async () => {
             html += `
             <div>
                 <h3>${tasks.title}</h3>
-                <p>${tasks.descripcion}</p>
+                <p>${tasks.description}</p>
                 <button class='btn-delete' data-id="${docs.id}">Delete</button>
                 <button class='btn-edit' data-id="${docs.id}">Edit</button>
             </div>`;
@@ -25,8 +25,11 @@ window.addEventListener('DOMContentLoaded', async () => {
         });
         const btnEdit = taskscontainer.querySelectorAll('.btn-edit')
         btnEdit.forEach(btn => {
-            btn.addEventListener('click', e =>{
-                console.log(e.target.dataset.id);
+            btn.addEventListener('click', async (e) =>{
+                const doc = await getTask(e.target.dataset.id);
+                const task = doc.data();
+                taskForm['task-title'].value = task.title;
+                taskForm['task-description'].value = task.description;
             });
         });
     });
