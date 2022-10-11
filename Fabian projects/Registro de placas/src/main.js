@@ -1,2 +1,1 @@
-import './firebase.js'
-console.log('Hello')
+import './app/signupForm.js'
