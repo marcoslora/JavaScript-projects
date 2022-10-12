@@ -3,12 +3,13 @@ import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.12.0/firebas
 import {
   getFirestore,
   collection,
-  addDoc,
   getDocs,
   onSnapshot,
+  addDoc,
   deleteDoc,
   doc,
   getDoc,
+  updateDoc,
 } from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-firestore.js';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -26,14 +27,17 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore();
-export const saveTask = (title, description) => {
-  addDoc(collection(db, 'tasks'), { title: title, description: description });
-};
-export const getTasks = () => getDocs(collection(db, 'tasks'));
+export const saveTask = (title, description) =>
+  addDoc(collection(db, 'tasks'), { title, description });
+
 export const onGetTasks = callback =>
   onSnapshot(collection(db, 'tasks'), callback);
-export const deleteTasks = id => deleteDoc(doc(db, 'tasks', id));
+
+export const deleteTask = id => deleteDoc(doc(db, 'tasks', id));
+
 export const getTask = id => getDoc(doc(db, 'tasks', id));
 
 export const updateTask = (id, newFields) =>
   updateDoc(doc(db, 'tasks', id), newFields);
+
+export const getTasks = () => getDocs(collection(db, 'tasks'));

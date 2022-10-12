@@ -1,63 +1,87 @@
-import {
-  saveTask,
-  getTasks,
-  onGetTasks,
-  deleteTasks,
-  getTask,
-  updateTask,
-} from './db.js';
+import { onGetTasks, saveTask, deleteTask, getTask, updateTask } from './db.js';
 
-const taskscontainer = document.getElementById('tasks-container');
-// editar los datos
+const taskForm = document.getElementById('task-form');
+const tasksContainer = document.getElementById('tasks-container');
+
 let editStatus = false;
+let id = '';
 
-// querysnapshot los datos que existen en ese momento como es asincrono tiene q esperar los datos con un promesa
-window.addEventListener('DOMContentLoaded', async () => {
-  //Loop de datos en la pantalla
+window.addEventListener('DOMContentLoaded', async e => {
   onGetTasks(querySnapshot => {
-    let html = '';
-    querySnapshot.forEach(docs => {
-      const tasks = docs.data();
-      html += `
-            <div>
-                <h3>${tasks.title}</h3>
-                <p>${tasks.description}</p>
-                <button class='btn-delete' data-id="${docs.id}">Delete</button>
-                <button class='btn-edit' data-id="${docs.id}">Edit</button>
-            </div>`;
+    tasksContainer.innerHTML = '';
+
+    querySnapshot.forEach(doc => {
+      const task = doc.data();
+
+      tasksContainer.innerHTML += `
+      <div class="card card-body mt-2 border-primary">
+    <h3 class="h5">${task.title}</h3>
+    <p>${task.description}</p>
+    <div>
+      <button class="btn btn-primary btn-delete" data-id="${doc.id}">
+        🗑 Delete
+      </button>
+      <button class="btn btn-secondary btn-edit" data-id="${doc.id}">
+        🖉 Edit
+      </button>
+    </div>
+  </div>`;
     });
-    taskscontainer.innerHTML = html;
-    //Boton de eliminar
-    const btnsDelete = taskscontainer.querySelectorAll('.btn-delete');
-    btnsDelete.forEach(btn => {
-      btn.addEventListener('click', ({ target: { dataset } }) => {
-        deleteTasks(dataset.id);
-      });
-    });
-    //Boton de editar
-    const btnEdit = taskscontainer.querySelectorAll('.btn-edit');
-    btnEdit.forEach(btn => {
+
+    const btnsDelete = tasksContainer.querySelectorAll('.btn-delete');
+    btnsDelete.forEach(btn =>
+      btn.addEventListener('click', async ({ target: { dataset } }) => {
+        try {
+          await deleteTask(dataset.id);
+        } catch (error) {
+          console.log(error);
+        }
+      })
+    );
+
+    const btnsEdit = tasksContainer.querySelectorAll('.btn-edit');
+    btnsEdit.forEach(btn => {
       btn.addEventListener('click', async e => {
-        const doc = await getTask(e.target.dataset.id);
-        const task = doc.data();
-        taskForm['task-title'].value = task.title;
-        taskForm['task-description'].value = task.description;
-        editStatus = true;
+        try {
+          const doc = await getTask(e.target.dataset.id);
+          const task = doc.data();
+          taskForm['task-title'].value = task.title;
+          taskForm['task-description'].value = task.description;
+
+          editStatus = true;
+          id = doc.id;
+          taskForm['btn-task-form'].innerText = 'Update';
+        } catch (error) {
+          console.log(error);
+        }
       });
     });
   });
 });
-//Guardar formulario
-const taskForm = document.getElementById('task-form');
-taskForm.addEventListener('submit', e => {
+
+taskForm.addEventListener('submit', async e => {
   e.preventDefault();
+
   const title = taskForm['task-title'];
-  const descripcion = taskForm['task-description'];
-  //Condicional para guardar lo editado o actulizar lo editado
-  if (editStatus) {
-    updateTask(title.value, descripcion.value);
-  } else {
-    saveTask(title.value, descripcion.value);
+  const description = taskForm['task-description'];
+
+  try {
+    if (!editStatus) {
+      await saveTask(title.value, description.value);
+    } else {
+      await updateTask(id, {
+        title: title.value,
+        description: description.value,
+      });
+
+      editStatus = false;
+      id = '';
+      taskForm['btn-task-form'].innerText = 'Save';
+    }
+
+    taskForm.reset();
+    title.focus();
+  } catch (error) {
+    console.log(error);
   }
-  taskForm.reset();
 });
