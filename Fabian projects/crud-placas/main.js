@@ -1,9 +1,12 @@
 import {saveTask, getTasks, onGetTasks, deleteTasks, getTask} from './db.js'
 
 const taskscontainer = document.getElementById('tasks-container')
+// editar los datos
+let editStatus = false;
+
 // querysnapshot los datos que existen en ese momento como es asincrono tiene q esperar los datos con un promesa
 window.addEventListener('DOMContentLoaded', async () => {
-    
+    //Loop de datos en la pantalla
     onGetTasks ((querySnapshot) => {
         let html = ''
         querySnapshot.forEach(docs =>{
@@ -17,12 +20,14 @@ window.addEventListener('DOMContentLoaded', async () => {
             </div>`;
         });
         taskscontainer.innerHTML = html;
+        //Boton de eliminar
         const btnsDelete = taskscontainer.querySelectorAll('.btn-delete')
         btnsDelete.forEach(btn => {
             btn.addEventListener('click', ({target: {dataset}}) => {
                 deleteTasks(dataset.id);
             });
         });
+        //Boton de editar
         const btnEdit = taskscontainer.querySelectorAll('.btn-edit')
         btnEdit.forEach(btn => {
             btn.addEventListener('click', async (e) =>{
@@ -30,16 +35,22 @@ window.addEventListener('DOMContentLoaded', async () => {
                 const task = doc.data();
                 taskForm['task-title'].value = task.title;
                 taskForm['task-description'].value = task.description;
+                editStatus = true;
             });
         });
     });
 });
-
+//Guardar formulario
 const taskForm = document.getElementById('task-form')
 taskForm.addEventListener('submit', (e) => {
     e.preventDefault()
     const title = taskForm['task-title'];
     const descripcion = taskForm['task-description'];
-    saveTask(title.value, descripcion.value);
+    //Condicional para guardar lo editado
+    if (editStatus) {
+        console.log('updating');
+    } else{
+        saveTask(title.value, descripcion.value);
+    };
     taskForm.reset();  
 })
