@@ -10,3 +10,17 @@
 //Non-blocking event loop
 //Compilacion  y interpretacion, JS ituliza una combinacion JIT
 //Abstract sintax three(AST) es lo q hay detras de una escritura de codigo, es lo que le envia al motor
+//call back
+//Call stack el orden en q se ejecuta el programa
+//Diferencias entre expresion y declaracion
+//Scoping controla y organiza como nuestro codigo esta organizado
+//Expresiones
+const hola = e => {
+  console.log(e);
+};
+hola('helle');
+//Declarativa
+function hola2(e) {
+  console.log(e);
+}
+hola2('hello');
