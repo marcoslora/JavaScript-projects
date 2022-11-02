@@ -13,7 +13,9 @@
 //call back
 //Call stack el orden en q se ejecuta el programa
 //Diferencias entre expresion y declaracion
-//Scoping controla y organiza como nuestro codigo esta organizado
+//Scoping es el espacio donde cierta variable esta declarada
+//3 types of scope global scope, function scope and block scope
+
 //Expresiones
 const hola = e => {
   console.log(e);
@@ -24,3 +26,25 @@ function hola2(e) {
   console.log(e);
 }
 hola2('hello');
+
+let number;
+function prueba1() {
+  number = 3;
+  console.log(number);
+}
+prueba1();
+console.log(number);
+
+function calcAge(birthYear) {
+  const age = 2022 - birthYear;
+  function printAge() {
+    const outPut = `You are ${age}, born in ${birthYear}`;
+    console.log(outPut);
+  }
+  printAge();
+  console.log(firtName);
+  return age;
+}
+//scope chain busca las variables donde esten
+const firtName = 'Marcos';
+calcAge(1992);
