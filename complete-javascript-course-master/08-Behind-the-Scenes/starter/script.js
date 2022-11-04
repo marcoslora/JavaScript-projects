@@ -15,7 +15,9 @@
 //Diferencias entre expresion y declaracion
 //Scoping es el espacio donde cierta variable esta declarada
 //3 types of scope global scope, function scope and block scope
-
+//Hoisting se declara la variable antes de utilizarla para darle un global scope
+//TDZ Temporal death zone
+// Mutual recursion
 //Expresiones
 const hola = e => {
   console.log(e);
@@ -52,3 +54,14 @@ function calcAge(birthYear) {
 //scope chain busca las variables donde esten
 const firtName = 'Marcos';
 calcAge(1992);
+
+//Declaration function
+function addDecl(a, b) {
+  return a + b;
+}
+//Expresion function
+const addExpr = function (a, b) {
+  return a + b;
+};
+//Arrow function
+const addArrow = (a, b) => a + b;
