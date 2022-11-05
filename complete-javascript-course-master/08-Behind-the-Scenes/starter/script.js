@@ -55,11 +55,11 @@ function calcAge(birthYear) {
 const firtName = 'Marcos';
 calcAge(1992);
 
-//Declaration function
+//Declaration function se puede llamar antes de ser creada
 function addDecl(a, b) {
   return a + b;
 }
-//Expresion function
+//Expresion function es una constante no puede estar en TDZ
 const addExpr = function (a, b) {
   return a + b;
 };
