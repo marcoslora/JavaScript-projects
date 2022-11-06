@@ -66,3 +66,11 @@ const addExpr = function (a, b) {
 //Arrow function
 const addArrow = (a, b) => a + b;
 // this keyword
+const marcos1 = {
+  name: 'marcos22',
+  lastname: 'Lora',
+  showName: function () {
+    console.log(this.name);
+  },
+};
+marcos1.showName();
