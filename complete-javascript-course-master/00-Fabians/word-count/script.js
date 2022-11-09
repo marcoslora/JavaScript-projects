@@ -1,6 +1,6 @@
 // Use the acumulator pattern
 //Letther counts in a word
-const palabra = "palabra";
+const palabra = "fabian";
 
 const palabraContador = {};
 for (let i = 0; i < palabra.length; i++) {
