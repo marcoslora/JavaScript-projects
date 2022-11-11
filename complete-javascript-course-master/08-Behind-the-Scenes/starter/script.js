@@ -74,3 +74,11 @@ const marcos1 = {
   },
 };
 marcos1.showName();
+
+console.log(this);
+
+const calcAgs = function (a) {
+  console.log(2022 - a);
+  console.log(this);
+};
+calcAgs(1992);
