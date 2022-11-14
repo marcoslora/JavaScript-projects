@@ -77,8 +77,61 @@ marcos1.showName();
 
 console.log(this);
 
-const calcAgs = function (a) {
-  console.log(2022 - a);
+const calcAgs = function (cumple) {
+  console.log(2022 - cumple);
   console.log(this);
 };
 calcAgs(1992);
+//arrow function no se utilizan arrow function como metodos dentro de objetos
+const calcAgeArrow = cumple => {
+  console.log(2022 - cumple);
+  console.log(this);
+};
+calcAgeArrow(1992);
+
+const marcos = {
+  firtsName: 'Marcos',
+  year: 1992,
+  calcAge: function () {
+    console.log(this);
+    console.log(2022 - this.year);
+    //Solucion 1
+    // const self = this; // self or that
+    // const isMillenial = function () {
+    //   console.log(self.year);
+    //   console.log(self.year >= 1981 && self.year <= 1996);
+    //Solucion 2
+    // las arrow function se pueden utilizar porq utilizan el this del padre
+    const isMillenial = () => {
+      console.log(this.year);
+      console.log(this.year >= 1981 && this.year <= 1996);
+    };
+    const greet = () => {
+      console.log(`Hey ${this.firtsName}`);
+    };
+    isMillenial();
+    greet();
+  },
+  // nos e usan arrow function en objetos no atrapa el this keyword
+  greet: () => {
+    console.log(`Hey ${this.firtsName}`);
+  },
+};
+marcos.calcAge();
+
+const matilda = {
+  firtsName: 'Matilda',
+  year: 2017,
+};
+matilda.calcAge = marcos.calcAge;
+matilda.calcAge();
+marcos.greet();
+
+// arguments keyword
+// parametros son las variables q nesecita la function
+// Argumentos son los valores q se le introducen a la funcion
+const addExpr1 = function (a, b) {
+  console.log(arguments);
+  return a + b;
+};
+addExpr1(2, 2, 4);
