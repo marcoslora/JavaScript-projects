@@ -1,0 +1,2 @@
+Para compilar se va a la carpeta donde se encuentra el script
+tsc 'nombre del archivo'
