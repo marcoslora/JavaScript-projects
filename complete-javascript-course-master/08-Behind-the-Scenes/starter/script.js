@@ -134,4 +134,12 @@ const addExpr1 = function (a, b) {
   console.log(arguments);
   return a + b;
 };
-addExpr1(2, 2, 4);
+console.log(addExpr1(2, 2));
+const me = {
+  name: 'Marcos',
+  age: 30,
+};
+const friend = me;
+friend.age = 27;
+friend.name = 'Kath';
+console.log(friend);

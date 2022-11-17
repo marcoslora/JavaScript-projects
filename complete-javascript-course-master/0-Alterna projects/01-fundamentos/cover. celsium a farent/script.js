@@ -10,7 +10,7 @@ const kmToMillas = km / 1.6;
 console.log(kmToMillas);
 // &&
 const leapYear = 2020;
-if ((leapYear % 4 == 0 && leapYear % 100 != 0) || leapYear % 400 == 0) {
+if ((leapYear % 4 === 0 && leapYear % 100 != 0) || leapYear % 400 === 0) {
   console.log(`${leapYear} es bisiesto`);
 } else {
   console.log(`${leapYear} no es bisiesto`);
