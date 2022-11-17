@@ -139,7 +139,12 @@ const me = {
   name: 'Marcos',
   age: 30,
 };
+// Apuntan al mismo objecto en el heap memory
 const friend = me;
 friend.age = 27;
 friend.name = 'Kath';
 console.log(friend);
+// Primitives data type: number, string, boolean, undefined, mull, symbol, bigInt. Almacenados en el call stack
+// Everything else is objects arrays, object literal, functions. Almacenado en memory heap
+console.log('Frin', friend);
+console.log('Me', me);
