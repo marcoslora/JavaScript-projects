@@ -148,3 +148,16 @@ console.log(friend);
 // Everything else is objects arrays, object literal, functions. Almacenado en memory heap
 console.log('Frin', friend);
 console.log('Me', me);
+// Para copiar objectos se utiliza Objects.assign porque sino se cambia el objecto original por el memory leap que lo almacena en una direccion y lo reconoce como un solo objecto
+// shalow copy Object.assign no cambia los array dentro del objecto
+// Deep clon low dash external librery for copy objects
+const jessica = {
+  firtsName: 'Jessica',
+  lastName: 'Williams',
+  age: 27,
+  family: ['alice', 'Bob'],
+};
+const jessicaCopy = Object.assign({}, jessica);
+jessicaCopy.lastName = 'Davis';
+jessicaCopy.family.push('Mary');
+console.log(jessica, jessicaCopy);
