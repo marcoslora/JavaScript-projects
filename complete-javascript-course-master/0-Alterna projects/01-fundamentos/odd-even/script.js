@@ -7,3 +7,11 @@ const parImpar = function (a) {
   }
 };
 parImpar(101);
+
+let number = -1;
+if (number === -number) {
+  number = number * -1;
+  console.log(number);
+} else {
+  console.log(number);
+}
