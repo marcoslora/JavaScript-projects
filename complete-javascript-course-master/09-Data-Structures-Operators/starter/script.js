@@ -27,3 +27,8 @@ const restaurant = {
     },
   },
 };
+
+console.log(restaurant.categories[1]);
+//Destructuring arrays
+const [first, , second] = restaurant.categories;
+console.log(first, second);
