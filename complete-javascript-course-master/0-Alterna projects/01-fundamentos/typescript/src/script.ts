@@ -53,7 +53,7 @@ function cambioDePrecioPromedio(listaDePrecios: number[]): number {
   let cambiosDePrecio: number[] = [];
   //Verifica que el array tenga mas de un elemento
   if (listaDePrecios.length > 1) {
-    //
+    //Le resta uno a la longitud del array el ultimo numero no tiene con quien restarse
     for (let i = 0; i < listaDePrecios.length - 1; i++) {
       //Resta el segundo valor - el primero
       const cambioActual = listaDePrecios[i + 1] - listaDePrecios[i];
