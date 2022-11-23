@@ -1,5 +1,5 @@
 "use strict";
-//0-Alterna\ projects/01-fundamentos/typescript/
+//0-Alterna\ projects/01-fundamentos/precioCombus/
 //Los array solo pueden ser de un solo tipo de dato y se definen como arrays
 const preciosGasolinaT1 = [
     270.1, 273.6, 278.6, 283.6, 293.6, 293.6, 293.6, 293.6, 283.6, 283.6, 287.6,
@@ -27,10 +27,9 @@ function precioMayor(listaDePrecios) {
 }
 //Verifica cual numero es menor en el array
 function precioMenor(listaDePrecios) {
-    let menorActual = 9999; //infinity
-    if (listaDePrecios.length > 0) {
-        menorActual = listaDePrecios[0];
-    }
+    if (!listaDePrecios || listaDePrecios.length === 0)
+        return 0;
+    let menorActual = listaDePrecios[0];
     for (let i = 0; i < listaDePrecios.length; i++) {
         if (menorActual > listaDePrecios[i]) {
             menorActual = listaDePrecios[i];
@@ -67,7 +66,26 @@ function cambioDePrecioPromedio(listaDePrecios) {
     }
     return 0;
 }
+function prediccionProximoPrecio(listaDePrecios) {
+    if (!listaDePrecios || listaDePrecios.length === 0)
+        return 0;
+    if (listaDePrecios.length === 1)
+        return listaDePrecios[0];
+    const ultimoCambio = listaDePrecios[listaDePrecios.length - 1] -
+        listaDePrecios[listaDePrecios.length - 2];
+    if (ultimoCambio >= 0) {
+        const cambioPromedio = cambioDePrecioPromedio(listaDePrecios);
+        const ultimoPrecio = listaDePrecios[listaDePrecios.length - 1];
+        return ultimoPrecio + Math.abs(cambioPromedio);
+    }
+    else {
+        const cambioPromedio = cambioDePrecioPromedio(listaDePrecios);
+        const ultimoPrecio = listaDePrecios[listaDePrecios.length - 1];
+        return ultimoPrecio - Math.abs(cambioPromedio);
+    }
+}
 console.log(`1. Cantidad total de precios: ${totalDePrecios(preciosGasolinaT1)}`);
 console.log(`2. Precio Mayor en el período: ${precioMayor(preciosGasolinaT1)}`);
 console.log(`3. Precio Menor en el período: ${precioMenor(preciosGasolinaT1)}`);
-console.log(`4. Cambios de Precio Promedio: ${cambioDePrecioPromedio(preciosGasolinaT1)}`);
+console.log(`4. Cambios de Precio Promedio: ${cambioDePrecioPromedio(preciosGasolinaT1).toFixed(2)}`);
+console.log(`Prediccion de precios ${prediccionProximoPrecio(preciosGasolinaT1)}`);
