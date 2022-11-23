@@ -97,8 +97,7 @@ function createNewAccount(
         lastAccountNumber.length - 4
       );
       const newNumber = parseInt(prevFourDigits) + 1;
-      lastFourDigits = newNumber.toString();
-      //lastFourDigits = newNumber.toString().padStart(4, '0');
+      lastFourDigits = newNumber.toString().padStart(4, '0');
     } else {
       lastFourDigits = '0001';
     }
