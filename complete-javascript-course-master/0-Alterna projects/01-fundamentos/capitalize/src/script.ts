@@ -15,3 +15,9 @@ console.log(copyItems.join(' '));
 
 // const capitalizeString = noFormatText.split(' ').map(capitalize).join(' ');
 // console.log(capitalizeString);
+
+// const copyItems: string[] = [];
+// noFormatText.forEach(str => {
+//   copyItems.push(str.charAt(0).toUpperCase() + str.slice(1));
+// });
+// console.log(copyItems.join(' '));
