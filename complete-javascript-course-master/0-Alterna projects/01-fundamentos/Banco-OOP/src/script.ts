@@ -4,6 +4,36 @@
 //padStart(number, '') a un string
 //Json.jsinify
 
+/*
+Alterna Bank & Trust
+*/
+
+/*
+Cliente
+
+Nombre y Apellido
+Correo Electrónico
+Identificación (Cédula / Pasaporte)
+Teléfono
+
+Cuentas
+Balance
+Tipo: (Ahorros/Corriente)
+Moneda: RD$ | US$
+Numero de Cuenta
+
+Transacciones
+Monto
+Moneda
+Tipos
+Depositos
+Retiros
+Transfers
+Deducciones
+
+Historial
+*/
+
 type ID = {
   idType: 'cedula' | 'pasaporte';
   value: string;
@@ -32,9 +62,16 @@ type Transaction = {
   transactionDate: number;
   amount: number;
   currency: Currency;
-  transactionType: 'deposit' | 'withdrawal' | 'transfer';
-  destination?: string;
-};
+  notes?: string;
+} & (
+  | {
+      transactionType: 'deposit';
+      destination: string;
+    }
+  | {
+      transactionType: 'withdrawal' | 'transfer';
+    }
+);
 
 const eliRey: Customer = {
   fullName: 'Eli Rey David',
@@ -115,22 +152,161 @@ function createNewAccount(
   return `Cuenta creada exitosamente - Número: ${newAccount.accountNumber} - Moneda: ${newAccount.currency} - Balance: ${newAccount.balance}`;
 }
 
+function getCustomerById(customerId: string) {
+  let customer: Customer | undefined;
+
+  for (let i = 0; i < allCustomers.length; i = i + 1) {
+    if (allCustomers[i].id.value === customerId) {
+      customer = allCustomers[i];
+      break;
+    }
+  }
+  return customer;
+}
+
+function getAccountById(customer: Customer, accountNumber: string) {
+  let account: Account | undefined;
+
+  for (let i = 0; i < customer.accounts.length; i = i + 1) {
+    if (customer.accounts[i].accountNumber === accountNumber) {
+      account = customer.accounts[i];
+      break;
+    }
+  }
+  return account;
+}
 /*
-  1. Buscar el cliente. Verificar que el cliente existe
-  2. Buscar la cuenta. Verificar que la cuenta existe.
-  3. Verificar la moneda de la cuenta a ver si son iguales
-  3.1 Si no lo son, entonces devolver error
-  4. Aumentar el balance de la cuenta con el monto del depósito
-  5. Almacenar la transacción en la cuenta del cliente.
-  6. Devolver un mensaje con el nuevo balance de la cuenta
+  1. Buscar el cliente. Verificar que el cliente existe*
+  2. Buscar la cuenta. Verificar que la cuenta existe *
+  3. Verificar la moneda de la cuenta a ver si son iguales *
+  3.1 Si no lo son, entonces devolver error *
+  4. Aumentar el balance de la cuenta con el monto del depósito *
+  5. Almacenar la transacción en la cuenta del cliente. *
+  6. Devolver un mensaje con el nuevo balance de la cuenta *
   */
-function newDeposit(
+function newTransaction(
   amount: number,
   customerId: string,
   accountNumber: string,
-  currency: Currency
+  currency: Currency,
+  transactionType: 'deposit' | 'withdrawal',
+  notes?: string
 ) {
-  /* TODO NEXT CLASS */
+  const customer = getCustomerById(customerId);
+  if (!customer) {
+    return 'Error: Cliente no encontrado.';
+  }
+
+  const account = getAccountById(customer, accountNumber);
+  if (!account) {
+    return `Error: Cuenta ${
+      transactionType === 'deposit' ? 'destino' : 'origen'
+    } no fue encontrada`;
+  }
+
+  if (account.currency !== currency) {
+    return `Error: La moneda de la cuenta ${
+      transactionType === 'deposit' ? 'destino' : 'origen'
+    } no es compatible con la moneda de la transacción`;
+  }
+  if (transactionType === 'withdrawal') {
+    if (account.balance < amount) {
+      return 'Error: Balance insuficiente para realizar esta transacción';
+    }
+  }
+  if (transactionType === 'deposit') {
+    account.balance = account.balance + amount;
+  } else {
+    account.balance = account.balance - amount;
+  }
+
+  // const transactionId = Math.trunc(Math.random() * Math.pow(10, 10)).toString()
+  const transaction: Transaction = {
+    transactionType: transactionType,
+    amount: amount,
+    currency: currency,
+    destination: transactionType === 'deposit' ? account.accountNumber : '',
+    transactionDate: Date.now(),
+    transactionId: crypto.randomUUID(),
+    notes: notes ?? 'Sin comentarios',
+  };
+  account.transactions.push(transaction);
+  return `${
+    transactionType === 'deposit' ? 'Depósito' : 'Retiro'
+  } completado. El nuevo balance de la cuenta ${accountNumber} es ${
+    account.balance
+  }`;
+}
+
+function transfer(
+  originCustomerId: string,
+  destinationCustomerId: string,
+  originAccountId: string,
+  destinationAccountId: string,
+  amount: number,
+  currency: Currency,
+  notes?: string
+) {
+  if (originCustomerId === destinationCustomerId) {
+    return 'Error: El cliente origen y destino es el mismo';
+  }
+  if (originAccountId === destinationAccountId) {
+    return 'Error: La cuenta origen y destino es la misma';
+  }
+  const withdrawalMessage = newTransaction(
+    amount,
+    originCustomerId,
+    originAccountId,
+    currency,
+    'withdrawal',
+    `Transferencia hacia ${destinationAccountId}`
+  );
+  if (withdrawalMessage.startsWith('Error')) {
+    return withdrawalMessage;
+  }
+  const depositMessage = newTransaction(
+    amount,
+    destinationCustomerId,
+    destinationAccountId,
+    currency,
+    'deposit',
+    `Transferencia desde ${originAccountId}`
+  );
+  if (depositMessage.startsWith('Error')) {
+    newTransaction(
+      amount,
+      originCustomerId,
+      originAccountId,
+      currency,
+      'deposit',
+      'Reembolso transferencia fallida'
+    );
+    return depositMessage;
+  }
+
+  const transaction: Transaction = {
+    amount: amount,
+    currency: currency,
+    transactionDate: Date.now(),
+    transactionId: crypto.randomUUID(),
+    transactionType: 'transfer',
+    notes: notes,
+  };
+
+  const originCustomer = getCustomerById(originCustomerId);
+  if (originCustomer) {
+    const originAccount = getAccountById(originCustomer, originAccountId);
+    if (originAccount) originAccount.transactions.push(transaction);
+  }
+  const destinationCustomer = getCustomerById(destinationCustomerId);
+  if (destinationCustomer) {
+    const destinationAccount = getAccountById(
+      destinationCustomer,
+      destinationAccountId
+    );
+    if (destinationAccount) destinationAccount.transactions.push(transaction);
+  }
+  return `Transferencia desde ${originAccountId} hacia ${destinationAccountId} por un monto de ${amount} completada exitosamente`;
 }
 
 const allCustomers: Customer[] = [];
@@ -139,3 +315,36 @@ allCustomers.push(eliRey);
 
 console.log(createNewAccount(esmerlyn, 10000, 'savings', 'DOP'));
 console.log(createNewAccount(esmerlyn, 600, 'checking', 'USD'));
+console.log(createNewAccount(eliRey, 3001, 'checking', 'DOP'));
+console.log(
+  newTransaction(20000, '402-1012641-9', '64190001', 'DOP', 'deposit')
+);
+console.log(newTransaction(300, '402-0895929-2', '92920002', 'USD', 'deposit'));
+console.log(
+  newTransaction(
+    500,
+    '402-0895929-2',
+    '92920001',
+    'DOP',
+    'deposit',
+    'Palé 25 17'
+  )
+);
+console.log(
+  newTransaction(200, '402-0895929-2', '92920002', 'USD', 'withdrawal')
+);
+console.log(
+  newTransaction(1200, '402-0895929-2', '92920002', 'USD', 'withdrawal')
+);
+console.log(
+  transfer(
+    '402-0895929-2',
+    '402-1012641-9',
+    '92920001',
+    '64190001',
+    150,
+    'DOP',
+    'Test Transfer'
+  )
+);
+console.log(allCustomers);
