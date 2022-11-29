@@ -5,9 +5,11 @@ const sueldoPerDay: number = sueldo / 23.83;
 const tiempo: number = 2555;
 const preAviso: boolean = true;
 const vacaciones: boolean = true;
-const initDate = new Date('06/01/2019').getTime();
-const endDate = new Date('12/31/2020').getTime();
-const labourDays = (endDate - initDate) / 1000 / 60 / 60 / 24;
+const initDate: number = new Date('06/01/2020').getTime();
+const endDate: number = new Date('12/31/2020').getTime();
+//toma el mismo ano de renuncia
+const currentYear: number = new Date('01/01/2020').getTime();
+const labourDays: number = (endDate - initDate) / 1000 / 60 / 60 / 24;
 console.log('Dias trabajados: ', labourDays);
 function calcPreAviso(ingr: number, time: number): number {
   let preAvisoMonto: number = 0;
@@ -55,8 +57,12 @@ function calcVacaciones(
 }
 
 function calcNavidad(ingr: number): number {
-  let fechaNavidad: number =
-    (endDate - new Date('01/01/2022').getTime()) / 1000 / 60 / 60 / 24;
+  let fechaNavidad: number = 0;
+  if (initDate > currentYear) {
+    fechaNavidad = (endDate - initDate) / 1000 / 60 / 60 / 24;
+  } else {
+    fechaNavidad = (endDate - currentYear) / 1000 / 60 / 60 / 24;
+  }
   fechaNavidad = (Math.floor(fechaNavidad / 30) * ingr) / 12;
   return parseFloat(fechaNavidad.toFixed(2));
 }
