@@ -5,8 +5,8 @@ const sueldoPerDay: number = sueldo / 23.83;
 const tiempo: number = 2555;
 const preAviso: boolean = true;
 const vacaciones: boolean = true;
-const initDate = new Date('12/28/2021').getTime();
-const endDate = new Date('12/31/2022').getTime();
+const initDate = new Date('06/01/2019').getTime();
+const endDate = new Date('12/31/2020').getTime();
 const labourDays = (endDate - initDate) / 1000 / 60 / 60 / 24;
 console.log('Dias trabajados: ', labourDays);
 function calcPreAviso(ingr: number, time: number): number {
