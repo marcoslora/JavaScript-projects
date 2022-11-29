@@ -1,5 +1,5 @@
 'use strict';
-
+const nested = [2, 4, [5, 8]];
 // Data needed for a later exercise
 const flights =
   '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
@@ -11,7 +11,9 @@ const restaurant = {
   categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
   starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
   mainMenu: ['Pizza', 'Pasta', 'Risotto'],
-
+  order: function (starIndex, mainIndex) {
+    return [this.starterMenu[starIndex], this.mainMenu[mainIndex]];
+  },
   openingHours: {
     thu: {
       open: 12,
@@ -29,24 +31,15 @@ const restaurant = {
 };
 
 console.log(restaurant.categories[1]);
-//Destructuring arrays
+//Destructuring arrays se pueden almacenar
 const [first, , second] = restaurant.categories;
 console.log(first, second);
-
-const noFormatText = 'alTErNa AcaDEMy eS lo MEJOR'
-  .toLocaleLowerCase()
-  .split(' ');
-
-function capitalize(str) {
-  //charAt atrapa el index de cada letra del string
-  //slice captura de ese en adelante
-  return str.charAt(0).toUpperCase() + str.slice(1);
-}
-const copyItems = [];
-noFormatText.forEach(str => {
-  copyItems.push(capitalize(str));
-});
-console.log(copyItems.join(' '));
-
-// const capitalizeString = noFormatText.split(' ').map(capitalize).join(' ');
-// console.log(capitalizeString);
+const [start, main] = restaurant.order(2, 0);
+console.log(main);
+const [nestedTest1, , nestedTest2] = nested;
+console.log(nestedTest1, nestedTest2);
+const [i, , [j, k]] = nested;
+console.log(i, j, k);
+//Default values
+const [p = 1, q = 1, r = 1] = [8, 9];
+console.log(p, q, r);
