@@ -1,0 +1,4 @@
+Node Package Manager(npm)
+"main": "dist/script.js"
+"start": "node dist/script.js"
+npm i express
