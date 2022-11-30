@@ -1,7 +1,15 @@
 //Calculadora laboral
 //00-Alterna-projects/01-fundamentos/calc-prest/
-const sueldo: number = 10000;
-const sueldoPerDay: number = sueldo / 23.83;
+type Person = {
+  fullName: string;
+  salaryPerMonth: number;
+};
+const person1: Person = {
+  fullName: 'Juan Perez',
+  salaryPerMonth: 0,
+};
+person1.salaryPerMonth = 10000;
+const sueldoPerDay: number = person1.salaryPerMonth / 23.83;
 const tiempo: number = 2555;
 const preAviso: boolean = true;
 const vacaciones: boolean = true;
@@ -70,9 +78,9 @@ console.log('PreAviso: ', calcPreAviso(sueldoPerDay, labourDays));
 console.log('Cesantia: ', calcCesantia(sueldoPerDay, labourDays));
 console.log(
   'Vacaciones: ',
-  calcVacaciones(sueldoPerDay, vacaciones, labourDays)
+  calcVacaciones(person1.salaryPerMonth, vacaciones, labourDays)
 );
-console.log('Navidad: ', calcNavidad(sueldo));
+console.log('Navidad: ', calcNavidad(sueldoPerDay));
 console.log(
   'Total a recibir:',
   parseFloat(
@@ -80,7 +88,7 @@ console.log(
       calcPreAviso(sueldoPerDay, labourDays) +
       calcCesantia(sueldoPerDay, labourDays) +
       calcVacaciones(sueldoPerDay, vacaciones, labourDays) +
-      calcNavidad(sueldo)
+      calcNavidad(sueldoPerDay)
     ).toFixed(2)
   )
 );
