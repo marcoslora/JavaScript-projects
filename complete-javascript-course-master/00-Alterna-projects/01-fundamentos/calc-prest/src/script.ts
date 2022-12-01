@@ -1,22 +1,22 @@
 //Calculadora laboral
 //00-Alterna-projects/01-fundamentos/calc-prest/
+
 type Person = {
   fullName: string;
-  salaryPerMonth: number;
 };
 const person1: Person = {
   fullName: 'Juan Perez',
-  salaryPerMonth: 0,
 };
-person1.salaryPerMonth = 10000;
-const sueldoPerDay: number = person1.salaryPerMonth / 23.83;
-const tiempo: number = 2555;
+
+const salaryPerMonth: number = 10000;
+const sueldoPerDay: number = salaryPerMonth / 23.83;
 const preAviso: boolean = true;
 const vacaciones: boolean = true;
-const initDate: number = new Date('06/01/2020').getTime();
-const endDate: number = new Date('12/31/2020').getTime();
+const initDate: number = new Date('12/31/2021').getTime();
+const endDate: number = new Date('12/31/2022').getTime();
 //toma el mismo ano de renuncia
-const currentYear: number = new Date('01/01/2020').getTime();
+const currentYear: number = new Date('01/01/2022').getTime();
+
 const labourDays: number = (endDate - initDate) / 1000 / 60 / 60 / 24;
 console.log('Dias trabajados: ', labourDays);
 function calcPreAviso(ingr: number, time: number): number {
@@ -78,9 +78,9 @@ console.log('PreAviso: ', calcPreAviso(sueldoPerDay, labourDays));
 console.log('Cesantia: ', calcCesantia(sueldoPerDay, labourDays));
 console.log(
   'Vacaciones: ',
-  calcVacaciones(person1.salaryPerMonth, vacaciones, labourDays)
+  calcVacaciones(sueldoPerDay, vacaciones, labourDays)
 );
-console.log('Navidad: ', calcNavidad(sueldoPerDay));
+console.log('Navidad: ', calcNavidad(salaryPerMonth));
 console.log(
   'Total a recibir:',
   parseFloat(
@@ -88,7 +88,7 @@ console.log(
       calcPreAviso(sueldoPerDay, labourDays) +
       calcCesantia(sueldoPerDay, labourDays) +
       calcVacaciones(sueldoPerDay, vacaciones, labourDays) +
-      calcNavidad(sueldoPerDay)
+      calcNavidad(salaryPerMonth)
     ).toFixed(2)
   )
 );
