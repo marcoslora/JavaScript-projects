@@ -9,11 +9,11 @@ const sueldoPerDay: number = salaryPerMonth / 23.83;
 const preAviso: boolean = true;
 const vacaciones: boolean = true;
 const initDateInput = prompt(
-  'Cuando ingreso al trabajo?\nformato de fecha mes/dias/anos'
+  'Cuando ingreso al trabajo?\nformato de fecha mes/dias/ano'
 );
 const initDateTransf = initDateInput ? initDateInput : 'Error';
 const endDateInput = prompt(
-  'Cuando renuncio al trabajo:\nformato de fecha mes/dias/anos'
+  'Cuando renuncio al trabajo:\nformato de fecha mes/dias/ano'
 );
 const endDateTransf = endDateInput ? endDateInput : 'Error';
 const initDate: number = new Date(`${initDateTransf}`).getTime();
