@@ -1,14 +1,22 @@
 "use strict";
 //Calculadora laboral
 //00-Alterna-projects/01-fundamentos/calc-prest/
-const salaryPerMonth = 10000;
+const userName = prompt('Cual es tu nombre: ');
+const userCalc = userName ? userName : 'Error';
+console.log(userCalc);
+const salaryInput = prompt('Cual es tu ingreso mensual?');
+const salaryPerMonth = salaryInput ? parseInt(salaryInput) : 0;
 const sueldoPerDay = salaryPerMonth / 23.83;
 const preAviso = true;
 const vacaciones = true;
-const initDate = new Date('12/31/2021').getTime();
-const endDate = new Date('12/31/2022').getTime();
+const initDateInput = prompt('Cuando ingreso al trabajo?\nformato de fecha mes/dias/anos');
+const initDateTransf = initDateInput ? initDateInput : 'Error';
+const endDateInput = prompt('Cuando renuncio al trabajo:\nformato de fecha mes/dias/anos');
+const endDateTransf = endDateInput ? endDateInput : 'Error';
+const initDate = new Date(`${initDateTransf}`).getTime();
+const endDate = new Date(`${endDateTransf}`).getTime();
 //toma el mismo ano de renuncia
-const currentYear = new Date('01/01/2022').getTime();
+const currentYear = new Date(`01/01/${endDateTransf.slice(-4)}`).getTime();
 const labourDays = (endDate - initDate) / 1000 / 60 / 60 / 24;
 console.log('Dias trabajados: ', labourDays);
 function calcPreAviso(ingr, time) {
