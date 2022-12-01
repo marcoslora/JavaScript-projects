@@ -28,7 +28,11 @@ const restaurant = {
       close: 24,
     },
   },
+  order: function (starIndex, mainIndex) {
+    return [this.starterMenu[starIndex], this.mainMenu[mainIndex]];
+  },
 };
+const { name, openingHours, categories } = restaurant;
 
 console.log(restaurant.categories[1]);
 //Destructuring arrays se pueden almacenar
