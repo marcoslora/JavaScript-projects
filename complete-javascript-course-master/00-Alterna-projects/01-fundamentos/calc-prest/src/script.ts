@@ -6,8 +6,6 @@ console.log(userCalc);
 const salaryInput = prompt('Cual es tu ingreso mensual?');
 const salaryPerMonth: number = salaryInput ? parseInt(salaryInput) : 0;
 const sueldoPerDay: number = salaryPerMonth / 23.83;
-const preAviso: boolean = true;
-const vacaciones: boolean = true;
 const initDateInput = prompt(
   'Cuando ingreso al trabajo?\nformato de fecha mes/dias/ano'
 );
@@ -22,8 +20,12 @@ const endDate: number = new Date(`${endDateTransf}`).getTime();
 const currentYear: number = new Date(
   `01/01/${endDateTransf.slice(-4)}`
 ).getTime();
-
 const labourDays: number = (endDate - initDate) / 1000 / 60 / 60 / 24;
+let preAvisoInput = prompt('Fue preavisado\nSi o No ');
+preAvisoInput?.toLocaleLowerCase;
+const preAviso: boolean = preAvisoInput === 'no' ? true : false;
+let vacacionesInput = prompt('A recibido sus vacaiones? ');
+const vacaciones: boolean = vacacionesInput === 'no' ? true : false;
 console.log('Dias trabajados: ', labourDays);
 function calcPreAviso(ingr: number, time: number): number {
   let preAvisoMonto: number = 0;
