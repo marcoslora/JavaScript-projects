@@ -17,11 +17,9 @@ app.use(express.urlencoded({ extended: false }));
 //Permite al server entender los formatos JSON
 app.use(express.json());
 
-//routes
-app.get('/', (req, res) => {
-  res.json({ Nombre: 'Marcos' });
-});
-
+//rutas en otra carpeta
+app.use(require('./routes/script'));
+app.use('/api/movies', require('./routes/movies'));
 // starting de server
 app.listen(app.get('port'), () => {
   console.log(`Sever on port ${app.get('port')}`);
