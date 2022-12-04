@@ -1,6 +1,8 @@
 'use strict';
 //00-Alterna-projects/03-internet/Api-Rest
-//http://127.0.0.1:5000/
+//http://127.0.0.1:5000/users
+//client-server escuchar peticion request y server devuelve respuesta response
+//application programming interface
 //Primer parametro
 const express = require('express');
 const app = express();
@@ -10,7 +12,7 @@ let users = [
   { id: 1, nombre: 'Pedro' },
   { id: 2, nombre: 'Carlos' },
   { id: 3, nombre: 'Josefa' },
-  { id: 4, nombre: 'Joselito' },
+  { id: 4, nombre: 'Jose' },
 ];
 
 //Rutas para clientes
@@ -24,17 +26,28 @@ app.get('/users', function (req, res) {
 });
 app.get('/users/:id', function (req, res) {
   //Destructuring
-  const { id } = req.params;
+  const id = req.params.id;
   const user = users.find(u => u.id === parseInt(id));
   console.log(user);
   res.json(user);
 });
 //Crear res.status(201).send('<h1>Hola users</h1>')
 app.post('/users', function (req, res) {
-  if (users.find(u => u.id === parseInt(id))) {
-    const { id, nombre } = req.body;
-    users.push({ id, nombre });
-    res.json({ id, nombre });
+  res.status(400);
+  const { id, nombre } = req.body;
+  const userTest = users.find(u => {
+    return u.id === id || u.nombre === nombre;
+  });
+  if (id && nombre) {
+    if (userTest) {
+      res.status(406).send('Este usuario o Id ya esta en uso, utilice otro');
+    } else {
+      users.push({ id, nombre });
+      res.json({ id, nombre });
+      res.status(200).send('Usuario creador');
+    }
+  } else {
+    res.status(406).json({ Error: 'Faltan datos' });
   }
 });
 //Actualizar

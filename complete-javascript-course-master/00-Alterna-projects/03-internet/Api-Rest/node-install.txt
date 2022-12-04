@@ -2,6 +2,7 @@ Node Package Manager(npm)
 "main": "dist/script.js"
 "start": "node dist/script.js"
 npm i express
-npm init para inicializar el packjson del modulo
+npm init --yes para inicializar el packjson del modulo
 npm i -D nodemon para Mac
 npm i -g nodemon para Windows
+npm i express morgan para instalar express y morgan
