@@ -31,9 +31,11 @@ app.get('/users/:id', function (req, res) {
 });
 //Crear res.status(201).send('<h1>Hola users</h1>')
 app.post('/users', function (req, res) {
-  const { id, nombre } = req.body;
-  users.push({ id, nombre });
-  res.json({ id, nombre });
+  if (users.find(u => u.id === parseInt(id))) {
+    const { id, nombre } = req.body;
+    users.push({ id, nombre });
+    res.json({ id, nombre });
+  }
 });
 //Actualizar
 app.put('/users', function (req, res) {
