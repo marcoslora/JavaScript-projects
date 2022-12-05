@@ -21,6 +21,12 @@ const itemsMap = items.map(item => {
 });
 
 console.log(itemsMap);
+list.map((currElement, index) => {
+  console.log('The current iteration is: ' + index);
+  console.log('The current element is: ' + currElement);
+  console.log('\n');
+  return currElement; //equivalent to list[index]
+});
 
 //find encuentra el primer objecto que cumpla la condicion
 const foundItem = items.find(item => {
