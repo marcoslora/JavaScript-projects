@@ -33,28 +33,31 @@ app.get('/users/:id', function (req, res) {
 });
 //Crear res.status(201).send('<h1>Hola users</h1>')
 app.post('/users', function (req, res) {
-  res.status(400);
   const { id, nombre } = req.body;
   const userTest = users.find(u => {
     return u.id === id || u.nombre === nombre;
   });
-  if (id && nombre) {
+  if ((id && nombre) || nombre.trim() !== '') {
     if (userTest) {
       res.status(406).send('Este usuario o Id ya esta en uso, utilice otro');
     } else {
       users.push({ id, nombre });
       res.json({ id, nombre });
-      res.status(200).send('Usuario creador');
     }
   } else {
     res.status(406).json({ Error: 'Faltan datos' });
   }
 });
 //Actualizar
-app.put('/users', function (req, res) {
-  res.send('<h1>Hola users put</h1>');
+app.put('/users/:id', function (req, res) {
+  const id = req.params.id;
+  const { nombre } = req.body;
+  users[id].nombre = nombre;
+  res.json(users);
 });
-app.delete('/users', function (req, res) {
-  res.send('<h1>Hola users delete</h1>');
+app.delete('/users/:id', function (req, res) {
+  const { id } = req.params;
+  delete users[id];
+  res.json(users);
 });
 app.listen(5000);
