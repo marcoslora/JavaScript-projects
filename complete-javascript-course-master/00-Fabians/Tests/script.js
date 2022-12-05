@@ -19,6 +19,6 @@ let details = [
 const Newdetails = details.forEach(e => {
   delete e.customerName;
   delete e.customerAge;
-  console.log(e);
 });
-//console.log(Newdetails);
+delete details[3];
+console.log(details);
