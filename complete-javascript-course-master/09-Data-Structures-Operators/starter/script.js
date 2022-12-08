@@ -6,7 +6,7 @@ const flights =
 
 // Data needed for first part of the section
 const restaurant = {
-  name: 'Classico Italiano',
+  name1: 'Classico Italiano',
   location: 'Via Angelo Tavanti 23, Firenze, Italy',
   categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
   starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
@@ -32,11 +32,14 @@ const restaurant = {
     return [this.starterMenu[starIndex], this.mainMenu[mainIndex]];
   },
 };
-const { name, openingHours, categories } = restaurant;
-
+const { name1, openingHours, categories } = restaurant;
+console.log(name1, openingHours, categories);
 console.log(restaurant.categories[1]);
-//Destructuring arrays se pueden almacenar
-const [first, , second] = restaurant.categories;
+//Destructuring assignment arrays se pueden almacenar
+let [first, , second] = restaurant.categories;
+console.log(first, second);
+//Array mutated
+[first, second] = [second, first];
 console.log(first, second);
 const [start, main] = restaurant.order(2, 0);
 console.log(main);
@@ -44,6 +47,23 @@ const [nestedTest1, , nestedTest2] = nested;
 console.log(nestedTest1, nestedTest2);
 const [i, , [j, k]] = nested;
 console.log(i, j, k);
+
 //Default values
 const [p = 1, q = 1, r = 1] = [8, 9];
 console.log(p, q, r);
+//Crear el destructuring con nuevos nombre
+const {
+  name1: restaurantName,
+  openingHours: hours,
+  categories: tags,
+} = restaurant;
+console.log(restaurantName, hours, tags);
+//Default values
+const { menu = [], starterMenu: startes = [] } = restaurant;
+console.log(menu, startes);
+//mutating variables
+let a = 111;
+let b = 999;
+const obj = { a: 1, b: 2 };
+({ a, b } = obj); //no funciona
+console.log(a, b);
