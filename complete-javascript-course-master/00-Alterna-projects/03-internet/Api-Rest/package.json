@@ -4,7 +4,8 @@
   "description": "",
   "main": "dist/script.js",
   "scripts": {
-    "start": "nodemon dist/script.js"
+    "start": "nodemon dist/script.js",
+    "dev": "npx tsc --watch"
   },
   "keywords": [],
   "author": "",

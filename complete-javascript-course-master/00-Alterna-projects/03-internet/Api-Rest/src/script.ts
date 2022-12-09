@@ -1,11 +1,13 @@
-//00-Alterna-projects/03-internet/30-internet
+//00-Alterna-projects/03-internet/Api-Rest
 import path from 'path';
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 const serve = express();
 
+//http://127.0.0.1:3000
+
 // npm start
-// npm run dev
+// npm run dev para prender el tsc
 // npm i @types/cors --save-dev
 
 // Middleware para que el post pueda recibir JSON en el body
@@ -90,7 +92,7 @@ function findUserByName(nombre: string) {
 // Metodo get que sirve una pagina web
 serve.get('/form', (request, response) => {
   // same-origin
-  response.sendFile(path.resolve('index.html'));
+  response.sendFile(path.resolve('front/index.html'));
 });
 
 // Metodo get

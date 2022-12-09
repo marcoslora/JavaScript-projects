@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Usuario</h1>
+
+    <input id="nombre" type="text" placeholder="Escriba el nombre" name="">
+    <button onclick="addUser()">Registrar</button>
+    <ul id="lista">
+        <li>Id - Nombre</li>
+    </ul>
+
+
+    <script>
+
+        function deleteUser(id) {
+            const requestOptions = {
+                method: 'DELETE',
+                redirect: 'follow'
+            };
+
+            fetch(`http://localhost:3000/users/${id}`, requestOptions)
+                .then(response => response.text())
+                .then(result => {
+                    alert('Eliminado');
+                    loadData();
+                    })
+                .catch(error => console.log('error', error));
+        }
+
+        function addUser() {
+            const myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+
+            const username = document.getElementById('nombre').value;
+
+            if (username.trim().length === 0) {
+                alert('El nombre es requerido');
+                return;
+            }
+
+            const raw = JSON.stringify({
+                "nombre": username
+            });
+
+            const requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+
+            fetch("http://localhost:3000/users", requestOptions)
+                .then(response => response.text())
+                .then(result => loadData())
+                .catch(error => console.log('error', error));
+        }
+
+        function addListItems(rawData) {
+            const data = JSON.parse(rawData);
+            const list = document.getElementById('lista');
+            list.innerHTML = '';
+
+            data.forEach(item => {
+                const li = document.createElement('li');
+                li.innerHTML = `${item.id} - ${item.nombre} 
+                <button onclick='deleteUser(${item.id})'>X</button>`;
+                list.appendChild(li);
+            });
+        }
+
+        function loadData() {
+            const requestOptions = {
+                method: 'GET',
+                redirect: 'follow'
+            };
+
+            fetch("http://localhost:3000/users", requestOptions)
+                .then(response => response.text())
+                .then(result => addListItems(result))
+                .catch(error => console.log('error', error));
+        }
+
+        loadData();
+    </script>
+</body>
+
+</html>
