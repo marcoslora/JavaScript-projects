@@ -31,7 +31,21 @@ const restaurant = {
   order: function (starIndex, mainIndex) {
     return [this.starterMenu[starIndex], this.mainMenu[mainIndex]];
   },
+  //Destructuring in a function y los parametros de objetos
+  orderDelivery: function ({ starIndex, mainIndex, address, time }) {
+    console.log(
+      `Order received ${this.starterMenu[starIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}`
+    );
+  },
 };
+
+restaurant.orderDelivery({
+  time: '22:30',
+  address: 'C/29 # 45',
+  mainIndex: 2,
+  starIndex: 2,
+});
+
 const { name1, openingHours, categories } = restaurant;
 console.log(name1, openingHours, categories);
 console.log(restaurant.categories[1]);
@@ -65,5 +79,10 @@ console.log(menu, startes);
 let a = 111;
 let b = 999;
 const obj = { a: 1, b: 2 };
-({ a, b } = obj); //no funciona
+({ a, b } = obj);
 console.log(a, b);
+//Nested objects
+const {
+  fri: { open: o, close: c },
+} = openingHours;
+console.log(o, c);
