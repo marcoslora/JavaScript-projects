@@ -32,7 +32,7 @@ const restaurant = {
     return [this.starterMenu[starIndex], this.mainMenu[mainIndex]];
   },
   //Destructuring in a function y los parametros de objetos
-  orderDelivery: function ({ starIndex, mainIndex, address, time }) {
+  orderDelivery: function ({ starIndex, mainIndex, address, time = '22:30' }) {
     console.log(
       `Order received ${this.starterMenu[starIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}`
     );
@@ -40,7 +40,6 @@ const restaurant = {
 };
 
 restaurant.orderDelivery({
-  time: '22:30',
   address: 'C/29 # 45',
   mainIndex: 2,
   starIndex: 2,

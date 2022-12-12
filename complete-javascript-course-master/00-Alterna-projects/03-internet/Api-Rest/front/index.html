@@ -1,95 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <h1>Usuario</h1>
 
-    <input id="nombre" type="text" placeholder="Escriba el nombre" name="">
+    <input id="nombre" type="text" placeholder="Escriba el nombre" name="" />
     <button onclick="addUser()">Registrar</button>
-    <ul id="lista">
-        <li>Id - Nombre</li>
-    </ul>
-
+    <ol id="lista">
+      <li>Id - Nombre</li>
+    </ol>
 
     <script>
+      function deleteUser(id) {
+        const requestOptions = {
+          method: 'DELETE',
+          redirect: 'follow',
+        };
 
-        function deleteUser(id) {
-            const requestOptions = {
-                method: 'DELETE',
-                redirect: 'follow'
-            };
+        fetch(`http://localhost:3000/users/${id}`, requestOptions)
+          .then(response => response.text())
+          .then(result => {
+            alert('Eliminado');
+            loadData();
+          })
+          .catch(error => console.log('error', error));
+      }
 
-            fetch(`http://localhost:3000/users/${id}`, requestOptions)
-                .then(response => response.text())
-                .then(result => {
-                    alert('Eliminado');
-                    loadData();
-                    })
-                .catch(error => console.log('error', error));
+      function addUser() {
+        const myHeaders = new Headers();
+        myHeaders.append('Content-Type', 'application/json');
+
+        const username = document.getElementById('nombre').value;
+
+        if (username.trim().length === 0) {
+          alert('El nombre es requerido');
+          return;
         }
 
-        function addUser() {
-            const myHeaders = new Headers();
-            myHeaders.append("Content-Type", "application/json");
+        const raw = JSON.stringify({
+          nombre: username,
+        });
 
-            const username = document.getElementById('nombre').value;
+        const requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: raw,
+          redirect: 'follow',
+        };
 
-            if (username.trim().length === 0) {
-                alert('El nombre es requerido');
-                return;
-            }
+        fetch('http://localhost:3000/users', requestOptions)
+          .then(response => response.text())
+          .then(result => loadData())
+          .catch(error => console.log('error', error));
+      }
 
-            const raw = JSON.stringify({
-                "nombre": username
-            });
+      function addListItems(rawData) {
+        const data = JSON.parse(rawData);
+        const list = document.getElementById('lista');
+        list.innerHTML = '';
 
-            const requestOptions = {
-                method: 'POST',
-                headers: myHeaders,
-                body: raw,
-                redirect: 'follow'
-            };
-
-            fetch("http://localhost:3000/users", requestOptions)
-                .then(response => response.text())
-                .then(result => loadData())
-                .catch(error => console.log('error', error));
-        }
-
-        function addListItems(rawData) {
-            const data = JSON.parse(rawData);
-            const list = document.getElementById('lista');
-            list.innerHTML = '';
-
-            data.forEach(item => {
-                const li = document.createElement('li');
-                li.innerHTML = `${item.id} - ${item.nombre} 
+        data.forEach(item => {
+          const li = document.createElement('li');
+          //${item.id} para ver el id de base datos
+          li.innerHTML = `${item.nombre} 
                 <button onclick='deleteUser(${item.id})'>X</button>`;
-                list.appendChild(li);
-            });
-        }
+          list.appendChild(li);
+        });
+      }
 
-        function loadData() {
-            const requestOptions = {
-                method: 'GET',
-                redirect: 'follow'
-            };
+      function loadData() {
+        const requestOptions = {
+          method: 'GET',
+          redirect: 'follow',
+        };
 
-            fetch("http://localhost:3000/users", requestOptions)
-                .then(response => response.text())
-                .then(result => addListItems(result))
-                .catch(error => console.log('error', error));
-        }
+        fetch('http://localhost:3000/users', requestOptions)
+          .then(response => response.text())
+          .then(result => addListItems(result))
+          .catch(error => console.log('error', error));
+      }
 
-        loadData();
+      loadData();
     </script>
-</body>
-
+  </body>
 </html>

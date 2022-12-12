@@ -8,9 +8,10 @@ const path_1 = __importDefault(require("path"));
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const serve = (0, express_1.default)();
+console.log('hola');
 //http://127.0.0.1:3000
 // npm start
-// npm run dev
+// npm run dev para prender el tsc
 // npm i @types/cors --save-dev
 // Middleware para que el post pueda recibir JSON en el body
 serve.use(express_1.default.json());
@@ -72,6 +73,7 @@ serve.get('/form', (request, response) => {
 });
 // Metodo get
 serve.get('/users', function (request, response) {
+    console.log('hola');
     response.json(users);
 });
 // Metodo Get que recibe parametro id

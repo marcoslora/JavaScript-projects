@@ -3,7 +3,7 @@ import path from 'path';
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 const serve = express();
-
+console.log('hola');
 //http://127.0.0.1:3000
 
 // npm start
