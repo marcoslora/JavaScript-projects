@@ -90,3 +90,7 @@ console.log(o, c);
 const arr1 = [7, 8, 9];
 const arrSpred = [1, 2, ...arr1];
 console.log(arrSpred);
+//Iterables: arrays, strings, maps, sets: Not objects
+const arrTest2 = 'Marco';
+const letter = [...arrTest2, ' ', 's.'];
+console.log(...letter);
