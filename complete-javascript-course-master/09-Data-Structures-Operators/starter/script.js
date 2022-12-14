@@ -71,15 +71,18 @@ const {
   categories: tags,
 } = restaurant;
 console.log(restaurantName, hours, tags);
+
 //Default values
 const { menu = [], starterMenu: startes = [] } = restaurant;
 console.log(menu, startes);
+
 //mutating variables
 let a = 111;
 let b = 999;
 const obj = { a: 1, b: 2 };
 ({ a, b } = obj);
 console.log(a, b);
+
 //Nested objects
 const {
   fri: { open: o, close: c },
@@ -90,3 +93,8 @@ console.log(o, c);
 const arr1 = [7, 8, 9];
 const arrSpred = [1, 2, ...arr1];
 console.log(arrSpred);
+//individual element in array
+console.log(...arrSpred);
+//join 2 arrays
+const menuF = [...restaurant.mainMenu, ...restaurant.starterMenu];
+console.log(menuF);
