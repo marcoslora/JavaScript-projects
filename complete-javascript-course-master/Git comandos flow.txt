@@ -7,7 +7,7 @@ git status; para ver que ya se guardaron local
 git push; para subir los cambios al repositorio
 git pull; para traer los archivos
 git log; para ver los commit efectuados en proyecto
-git reset <hash>;
+git reset <hash>; resetea el branch al commit q hiciste y te muestra los cambios
 git rever <hash>;
 git rebase <branch>; cambios del develop branch los sube al main branch no guarda historial
 git merge <branch>; cambios del develop branch los sube al main branch 
