@@ -37,6 +37,11 @@ const restaurant = {
       `Order received ${this.starterMenu[starIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}`
     );
   },
+  orderPasta: function (ing1, ing2, ing3) {
+    console.log(
+      `Here is your delicious pasta with ${ing1}, ${ing2} and ${ing3}`
+    );
+  },
 };
 
 restaurant.orderDelivery({
@@ -103,3 +108,19 @@ console.log(menuF);
 const arrTest2 = 'Marco';
 const letter = [...arrTest2, ' ', 's.'];
 console.log(...letter);
+
+// const ingredients = [
+//   prompt("Let's make pasta! Ingredient 1? "),
+//   prompt("Let's make pasta! Ingredient 2? "),
+//   prompt("Let's make pasta! Ingredient 3? "),
+// ];
+// restaurant.orderPasta(...ingredients);
+
+//New objects modifications
+//Si copio el objecto con el spread no se queda vinculado el address
+const newRestaurant = { foundedIn: 1998, ...restaurant, founder: 'Guiseppe' };
+newRestaurant.name1 = 'Ristotante Roma';
+console.log(restaurant.name1, newRestaurant.name1);
+
+//Rest pattern toma los elementos q quedan en el array
+const arr2 = [1, 2, ...[3, 4]];
