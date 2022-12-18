@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Medical Form</title>
+  </head>
+  <body>
+    <h1>Registro de citas medicas</h1>
+    <form>
+      <label>Cedula:</label><br />
+      <input type="text" name="idcedula" placeholder="000-000000-0" /><br />
+      <label>Nombres:</label><br />
+      <input type="text" name="firtsname" /><br />
+      <label>Apellidos:</label><br />
+      <input type="text" name="lastname" /><br />
+      <label>Edad:</label><br />
+      <input type="text" name="age" /><br />
+      <label>Acompanante:</label><br />
+      <input type="text" name="company" /><br />
+      <label>Sexo:</label><br />
+      <input type="radio" id="male" name="sextype" />
+      <label for="male">Masculino</label><br />
+      <input type="radio" id="female" name="sextype" />  
+      <label for="female">Femenino</label><br />
+      <label>Selecione un doctor:</label><br />
+      <select name="selectdoctor">
+        <option value="doctor">Selecione un doctor/a</option>
+        <option value="doctor">Dr.Pablo De La Rosa (Cirujano)</option>
+        <option value="doctor">Dra.Ingrid Castillo (Pediatra)</option>
+        <option value="doctor">Dr.Raul Guerrero (Oftalmologo)</option></select
+      ><br />
+      <label>Seguimiento o nuevo paciente</label><br />
+      <select name="patient">
+        <option value="appointment">Selecione una opcion</option>
+        <option value="appointment">Cita de seguimiento</option>
+        <option value="appointment">Nuevo paciente</option></select
+      ><br />
+      <label>Fecha de cita:</label><br />
+      <input type="date" name="date" /><br />
+      <label>Fecha de hora:</label><br />
+      <input type="time" name="time" /><br />
+      <label>Motivo de la consulta</label><br />
+      <textarea cols="30" rows="3"></textarea><br />
+
+      <input type="submit" value="Submit" />
+    </form>
+  </body>
+</html>
