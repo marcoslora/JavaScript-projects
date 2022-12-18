@@ -9,3 +9,4 @@ git pull; para traer los archivos
 git log; para ver los commit efectuados en proyecto
 git rebase
 git merge
+git checkout -b <nombre branch>; crea un nuevo branch

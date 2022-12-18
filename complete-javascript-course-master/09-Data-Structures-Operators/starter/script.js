@@ -124,3 +124,4 @@ console.log(restaurant.name1, newRestaurant.name1);
 
 //Rest pattern toma los elementos q quedan en el array
 const arr2 = [1, 2, ...[3, 4]];
+console.log('dasdas');
