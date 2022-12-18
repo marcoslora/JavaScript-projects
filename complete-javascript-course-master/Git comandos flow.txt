@@ -7,6 +7,10 @@ git status; para ver que ya se guardaron local
 git push; para subir los cambios al repositorio
 git pull; para traer los archivos
 git log; para ver los commit efectuados en proyecto
+git reset commit <#>;
+git rever commit <#>;
 git rebase
 git merge
+git checkout; cambiar de branch;
 git checkout -b <nombre branch>; crea un nuevo branch
+git push --set-upstream origin develop; subir el branch q cree
