@@ -8,7 +8,8 @@ git push; para subir los cambios al repositorio
 git pull; para traer los archivos
 git log; para ver los commit efectuados en proyecto
 git reset <hash>; resetea el branch al commit q hiciste y te muestra los cambios
-git revert <hash>; vuelve
+git reset --hard; restaura al commit actual
+git revert <hash>; restaura por completo al momento de ese commit
 git rebase <branch>; cambios del develop branch los sube al main branch no guarda historial
 git merge <branch>; cambios del develop branch los sube al main branch 
 git checkout; cambiar de branch;
@@ -16,3 +17,4 @@ git checkout -b <nombre branch>; crea un nuevo branch
 git push --set-upstream origin develop; subir el branch q cree
 git pull origin <main>; jala del branch los archivos
 git diff; para ver los cambios
+git pull request; se hace en pagina para unir los branch
