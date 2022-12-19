@@ -15,6 +15,7 @@ git merge <branch>; cambios del develop branch los sube al main branch
 git checkout; cambiar de branch;
 git checkout -b <nombre branch>; crea un nuevo branch
 git push --set-upstream origin develop; subir el branch q cree
-git pull origin <main>; jala del branch los archivos
+git pull origin <branch>; jala del branch los archivos
 git diff; para ver los cambios
+git diff <branch>; para ver las diferencias entre branch
 git pull request; se hace en pagina para unir los branch
