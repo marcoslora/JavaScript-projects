@@ -124,4 +124,13 @@ console.log(restaurant.name1, newRestaurant.name1);
 
 //Rest pattern toma los elementos q quedan en el array
 const arr2 = [1, 2, ...[3, 4]];
-console.log('Prueba de comit');
+const [a1, b1, ...others1] = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+console.log(others1);
+const [pizza, , risotto, ...otherfood] = [
+  ...restaurant.mainMenu,
+  ...restaurant.starterMenu,
+];
+console.log(pizza, risotto, otherfood);
+//Rest pattern Objects
+const { sat, ...weekdays } = restaurant.openingHours;
+console.log(weekdays);
