@@ -134,3 +134,24 @@ console.log(pizza, risotto, otherfood);
 //Rest pattern Objects
 const { sat, ...weekdays } = restaurant.openingHours;
 console.log(weekdays);
+//Functions
+const add = function (...numbers) {
+  let sum = 0;
+  for (let i = 0; i < numbers.length; i++) {
+    sum += numbers[i];
+  }
+  console.log(sum);
+};
+add(2, 3, 4, 5, 6, 7);
+const x1 = [6, 7, 8, 9];
+add(...x1);
+
+//short circuiting (&& and ||)
+//If is truthy value and falsy value
+//truthy:
+//falsy: undefined, '', 0, NaN, null
+console.log(null || 'Marcos');
+console.log(0 || 'h');
+
+const guest1 = restaurant.numGuest ? restaurant.numGuest : 10;
+console.log(guest1);
