@@ -5,6 +5,27 @@ const flights =
   '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
 
 // Data needed for first part of the section
+//compute
+const weekdays1 = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+const openingHours1 = {
+  [weekdays1[3]]: {
+    open: 12,
+    close: 22,
+  },
+  fri: {
+    open: 11,
+    close: 23,
+  },
+  sat: {
+    open: 0, // Open 24 hours
+    close: 24,
+  },
+  [`day-${2 + 2}`]: {
+    open: 0, // Open 24 hours
+    close: 24,
+  },
+};
+
 const restaurant = {
   name1: 'Classico Italiano',
   location: 'Via Angelo Tavanti 23, Firenze, Italy',
@@ -14,6 +35,7 @@ const restaurant = {
   order: function (starIndex, mainIndex) {
     return [this.starterMenu[starIndex], this.mainMenu[mainIndex]];
   },
+
   openingHours: {
     thu: {
       open: 12,
@@ -28,7 +50,10 @@ const restaurant = {
       close: 24,
     },
   },
-  order: function (starIndex, mainIndex) {
+  //ES6 enhanced object literals
+  openingHours1,
+  //enhanced functions
+  order(starIndex, mainIndex) {
     return [this.starterMenu[starIndex], this.mainMenu[mainIndex]];
   },
   //Destructuring in a function y los parametros de objetos
@@ -36,6 +61,10 @@ const restaurant = {
     console.log(
       `Order received ${this.starterMenu[starIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}`
     );
+  },
+  orderPizza(mainIngredient, ...otherIngredients) {
+    console.log(mainIngredient);
+    console.log(otherIngredients);
   },
   orderPasta: function (ing1, ing2, ing3) {
     console.log(
@@ -153,5 +182,164 @@ add(...x1);
 console.log(null || 'Marcos');
 console.log(0 || 'h');
 
+//Validacion con un operador ternario
+
 const guest1 = restaurant.numGuest ? restaurant.numGuest : 10;
 console.log(guest1);
+//Validacion con short circuiting or devuelve el primer valor q sea verdadero o el ultimo si todos son falsy
+const guest2 = restaurant.numGuest || 11;
+console.log(guest2);
+//Validacion con short circuiting and devuelve el primer valor que sea falso o el ultimo valor si todos son truthy
+console.log('---AND---');
+console.log('hello' && 28);
+
+if (restaurant.orderPizza) {
+  restaurant.orderPizza('res', 'Spinach', 'peperoni');
+}
+
+restaurant.orderPizza && restaurant.orderPizza('res', 'Spinach', 'peperoni');
+//nullish coalescing operator ?? valores nulos en vez de valores falsos
+//Nullish: null and undefined
+restaurant.numGuest = 0;
+const guest3 = restaurant.numGuest ?? 11;
+console.log(guest3);
+
+//logical assignment operator
+const rest1 = { name: 'capri', numGuests: 20 };
+const rest2 = { name: 'LA Piazza', owner: 'Marcos' };
+rest2.numGuests = rest1.numGuests || 10;
+//OR assignment operator
+rest1.numGuests ||= 10;
+//Nullish assignment operator
+rest2.numGuests ??= 10;
+//AND assignment operator
+rest2.owner &&= 'Hidden';
+console.log(rest2.owner);
+
+//Code challenge #1
+
+const game = {
+  team1: 'Bayern Munich',
+  team2: 'Borrussia Dortmund',
+  players: [
+    [
+      'Neuer',
+      'Pavard',
+      'Martinez',
+      'Alaba',
+      'Davies',
+      'Kimmich',
+      'Goretzka',
+      'Coman',
+      'Muller',
+      'Gnarby',
+      'Lewandowski',
+    ],
+    [
+      'Burki',
+      'Schulz',
+      'Hummels',
+      'Akanji',
+      'Hakimi',
+      'Weigl',
+      'Witsel',
+      'Hazard',
+      'Brandt',
+      'Sancho',
+      'Gotze',
+    ],
+  ],
+  score: '4:0',
+  scored: ['Lewandowski', 'Gnarby', 'Lewandowski', 'Hummels'],
+  date: 'Nov 9th, 2037',
+  odds: {
+    team1: 0.33,
+    x: 3.25,
+    team2: 6.5,
+  },
+};
+//challenge
+//1.
+const [players1, players2] = game.players;
+//2.
+const [gk, ...fieldPlayers] = players1;
+//3.
+const allPlayers = [...players1, ...players2];
+//4.
+const players1Final = [...players1, 'Thiago', 'Coutinho', 'Perisic'];
+//5.
+const {
+  odds: { team1, x: draw, team2 },
+} = game;
+console.log(team2);
+//6.
+const printGoals = function (...players) {
+  console.log(...players);
+  console.log(`${players.length} goals were scored`);
+};
+printGoals(...game.scored);
+//7.
+//ternary
+const winTheGame = team1 > team2 ? 'Team1 Gano' : 'Team2 gano';
+console.log(winTheGame);
+//operator
+team1 < team2 && console.log('Team 1 is more likely top win');
+team1 > team2 && console.log('Team 2 is more likely top win');
+
+//Looping arrays
+const menu2 = [...restaurant.starterMenu, ...restaurant.mainMenu];
+console.log(menu2);
+//for of
+for (const item of menu2) console.log(item);
+
+for (const [i, elem] of menu2.entries()) {
+  console.log(`${i + 1}: ${elem}`);
+}
+//enhanced object literal, functions and compute
+//ruta de la clase
+console.log(restaurant.openingHours1);
+
+//optional chaining return undefined si no existe lo q estamos llamando
+console.log(restaurant.openingHours?.mon?.open);
+
+//example
+for (const day of weekdays1) {
+  //console.log(day);
+  const open = restaurant.openingHours[day]?.open ?? 'closed';
+  console.log(`On ${day}, we open ${open}`);
+}
+
+//chaining methods
+console.log(restaurant.order?.(0, 1) ?? 'Method does not exist');
+
+//chaining array
+const users2 = [{ name: 'jonas', emai: 'marcoslora95' }];
+console.log(users2[0]?.name ?? 'User array empty');
+
+//traditional validation
+if (users2.length > 0) console.log(users2[0].name);
+else console.log('user array empty');
+
+//Looping keys, values and entries
+for (const day of Object.keys(openingHours1)) {
+  console.log(day);
+}
+//Key properties names
+const properties = Object.keys(openingHours1);
+let openStr = `We are open on ${properties.length} days: `;
+
+for (const day of properties) {
+  openStr += `${day}, `;
+}
+console.log(openStr);
+//values properties values
+const values = Object.values(openingHours1);
+console.log(values);
+
+//Entire object index
+const entries = Object.entries(openingHours1);
+console.log(entries);
+
+for (const [key, { open, close }] of entries) {
+  console.log(`On ${key} we open at ${open} and close at ${close}`);
+}
