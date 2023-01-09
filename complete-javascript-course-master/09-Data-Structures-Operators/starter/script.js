@@ -253,7 +253,7 @@ const game = {
   scored: ['Lewandowski', 'Gnarby', 'Lewandowski', 'Hummels'],
   date: 'Nov 9th, 2037',
   odds: {
-    team1: 0.33,
+    team1: 1.33,
     x: 3.25,
     team2: 6.5,
   },
@@ -343,3 +343,123 @@ console.log(entries);
 for (const [key, { open, close }] of entries) {
   console.log(`On ${key} we open at ${open} and close at ${close}`);
 }
+// code challenge #2
+//1.
+const playersScored = game.scored;
+for (const [i, players] of playersScored.entries()) {
+  console.log(`Goal ${i + 1}: ${players} `);
+}
+//2.
+const scoredValues = Object.values(game.odds);
+let scoredAverage = 0;
+for (const i of scoredValues) {
+  scoredAverage += i;
+}
+scoredAverage /= scoredValues.length;
+console.log(scoredAverage);
+//3.
+for (const [team, odd] of Object.entries(game.odds)) {
+  const teamStr = team === 'x' ? 'draw' : `victory ${game[team]}`;
+  console.log(`Odd of ${teamStr} ${odd}`);
+}
+
+//Data Structures Sets colections of unique of values, borra los duplicados, no existe indices
+const ordersSet = new Set([
+  'Pasta',
+  'Pizza',
+  'Pizza',
+  'Risotto',
+  'Pasta',
+  'Pizza',
+]);
+console.log(ordersSet);
+//length
+console.log(ordersSet.size);
+//Boolean verifica si existe
+console.log(ordersSet.has('Pizza'));
+//add
+ordersSet.add('Garlic Bread');
+console.log(ordersSet);
+//Delete
+ordersSet.delete('Garlic Bread');
+console.log(ordersSet);
+//Borrar todo .clear()
+for (const order of ordersSet) {
+  console.log(order);
+}
+
+//Example for remove duplicate
+const staff = ['waiter', 'chef', 'waiter', 'manager', 'chef', 'waiter'];
+//Set to array
+const positions = [...new Set(staff)];
+console.log(positions);
+
+//MAP
+//Map estructura de datos para asignar keys y values similares a los objetos
+//pero los map pueden tener cualquier tipo de dato en keys hasta array
+const restMap = new Map();
+restMap.set('name', 'Classico Italiano');
+restMap.set(1, 'Firenze, Italy');
+restMap.set(2, 'Lisbon, Portugal');
+restMap
+  .set('categories', ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'])
+  .set('open', 11)
+  .set('close', 23)
+  .set(true, 'We are open')
+  .set(false, 'We are close');
+
+console.log(restMap.get('name'));
+console.log(restMap.get(true));
+
+//example
+const time = 9;
+console.log(
+  restMap.get(time > restMap.get('open') && time < restMap.get('close'))
+);
+//Revisar si existe
+console.log(restMap.has('opens'));
+//Delete
+restMap.delete(2);
+console.log(restMap);
+//other
+console.log(restMap.size);
+//restMap.clear();
+//memory heap
+const arr3 = [1, 2];
+restMap.set(arr3, 'test');
+restMap.set(document.querySelector('h1'), 'Heading');
+console.log(restMap);
+console.log(restMap.get(arr3));
+
+const question = new Map([
+  ['question', 'What is the best programming language in the world ?'],
+  [1, 'C'],
+  [2, 'Java'],
+  [3, 'JavaScript'],
+  ['correct', 3],
+  [true, 'Correct'],
+  [false, 'Try again!!'],
+]);
+console.log(question);
+
+//Convert object to map
+console.log(Object.entries(openingHours1));
+const hoursMap = new Map(Object.entries(openingHours1));
+console.log(hoursMap);
+//Map iterable
+console.log(question.get('question'));
+for (const [key, value] of question) {
+  if (typeof key === 'number') {
+    console.log(`Answer ${key}: ${value}`);
+  }
+}
+
+const answer = 3;
+const correctAnswer =
+  answer === question.get('correct') ? question.get(true) : question.get(false);
+console.log(question.get(question.get('correct') === answer));
+
+//Convert map to array
+console.log([...question]);
+console.log([...question.keys()]);
+console.log([...question.values()]);
