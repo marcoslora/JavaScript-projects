@@ -21,3 +21,19 @@ console.log(copyItems.join(' '));
 //   copyItems.push(str.charAt(0).toUpperCase() + str.slice(1));
 // });
 // console.log(copyItems.join(' '));
+function capitalizeWords(sentence: string): string {
+  const words = sentence.split(' ');
+
+  for (let i = 0; i < words.length; i++) {
+    words[i] =
+      words[i].toUpperCase().charAt(0) + words[i].slice(1).toLowerCase();
+  }
+
+  const result = words.join(' ');
+
+  return result;
+}
+
+const mySentence = 'alterna academy is an awesome resource';
+
+console.log(capitalizeWords(mySentence));
