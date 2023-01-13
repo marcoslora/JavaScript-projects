@@ -463,3 +463,6 @@ console.log(question.get(question.get('correct') === answer));
 console.log([...question]);
 console.log([...question.keys()]);
 console.log([...question.values()]);
+// 4 data structure Array or set o objects or maps
+
+//Investigar NON-built in: stacks, queues, linked lists, trees, hash tables.
