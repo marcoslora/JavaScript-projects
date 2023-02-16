@@ -489,5 +489,166 @@ gameEvents.delete(64);
 console.log(
   `An event happened, on average, every ${90 / gameEvents.size} minutes`
 );
-const time1 = [...gameEvents.keys()];
+//pop elimina y retorna el ultimo elemento del arreglo
+const time1 = [...gameEvents.keys()].pop();
 console.log(time1);
+console.log(
+  `An event happened, on average, every ${time1 / gameEvents.size} minutes`
+);
+//4.
+for (const [min, event] of gameEvents) {
+  const half = min <= 45 ? 'FIRTS' : 'SECOND';
+  console.log(`[${half} HALF] ${min}: ${event}`);
+}
+
+//String
+const airline = 'TAP Air Portugal Porp';
+const plane = 'A320';
+console.log(plane[0]);
+console.log('A320'.length);
+//devuelve el index del primer elemento encontrado
+console.log(airline.indexOf('r'));
+//devuelve el index del ultimo elemento encontrado
+console.log(airline.lastIndexOf('P'));
+//Busca en donde empiezan las palabras
+console.log(airline.indexOf('Porp'));
+//slice(start, end)
+console.log(airline.slice(4, 7));
+
+console.log(airline.slice(0, airline.indexOf(' ')));
+console.log(airline.slice(airline.lastIndexOf(' ') + 1));
+
+const chechMiddleSeat = function (seat) {
+  const s =
+    seat.slice(-1) == 'B' || seat.slice(-1) == 'E'
+      ? 'Middle seats '
+      : 'Others seats';
+  console.log(s);
+};
+
+chechMiddleSeat('11B');
+chechMiddleSeat('1 n E');
+chechMiddleSeat('11C');
+//te convierte un string en un array
+console.log(typeof new String('Hola'));
+//Cambia el objeto a primitivo
+console.log(new String('Hola').slice(1));
+//JavaScript boxing convierte un string primitivo en un objecto. Cuando llamamos un metodo a un string
+
+//Fix capitalization
+const passager = 'mArcOs'.toLowerCase();
+const passengerCorrect = passager[0].toUpperCase() + passager.slice(1);
+console.log(passengerCorrect);
+
+//Comparing emails
+const email = 'hello@jonas.io';
+const loginEmail = '   hello@Jonas.Io \n';
+
+const normalizedEmail = loginEmail.toLowerCase().trim();
+console.log(email === normalizedEmail);
+const emailValidator = function (g, b) {
+  const normalized = b.toLowerCase().trim();
+  console.log(normalized === g);
+};
+emailValidator(email, loginEmail);
+// REPLACING
+const priceGB = '288,97£';
+const priceUS = priceGB.replace(',', '.').replace('£', '$');
+console.log(priceUS);
+
+const announcement =
+  'All passaengers come to bording door 23. Boarding door 23!';
+console.log(announcement.replaceAll('door', 'gate'));
+//regular expressions
+console.log(announcement.replace(/door/g, 'gate'));
+//Booleans
+const plane1 = 'A320neo';
+console.log(plane1.includes('A'));
+console.log(plane1.startsWith('A31'));
+console.log(plane1.endsWith('eo'));
+plane1.startsWith('A3') && plane1.endsWith('eo')
+  ? console.log('Part of the new Airbus family')
+  : console.log('No cumple');
+
+//Practice exercise
+const checkBaggage = function (items) {
+  const baggage = items.toLowerCase();
+  baggage.includes('knife') || baggage.includes('gun')
+    ? console.log('You not allow')
+    : console.log('Welcome a board');
+};
+checkBaggage('I have a laptop and Knife');
+checkBaggage('I have a laptop and GUN');
+checkBaggage('I have a laptop');
+
+//split and join
+console.log('a+very+nice+string'.split('+'));
+const [firstName, lastName] = 'Marcos lora'.split(' ');
+//.join() unifica los array para convertirlo en un solo array pasando cualquier para metro en cada unificacion
+console.log(['Mr.', firstName, lastName.toUpperCase()].join(' '));
+//todas capilalice
+const marcosName = 'MARcos LorA esTrelLa';
+const nameCapi = marcosName.toLocaleLowerCase().split(' ');
+let transforName = [];
+nameCapi.forEach(e => {
+  let a = e[0].toUpperCase() + e.slice(1);
+  transforName.push(a);
+});
+console.log(transforName.join(' '));
+//Jonas solucion
+
+const capilalizeName = function (name) {
+  const namesUpper = [];
+  const names = name.split(' ');
+  for (const n of names) {
+    namesUpper.push(n[0].toUpperCase() + n.slice(1).toLowerCase());
+    //replace(n[0], n[0].toUpperCase())
+  }
+  console.log(namesUpper.join(' '));
+};
+capilalizeName(marcosName);
+//Padding
+
+const message = 'Go to gate 23';
+//le agrega al string el simbolo pasado hasta el length sea del tamano del primer parametro al principio y padend al final
+console.log(message.padStart(26, '+').padEnd(39, '+'));
+const maskCreditCard = function (number) {
+  const str = number + '';
+  const last = str.slice(-4);
+  return last.padStart(str.length, '*');
+};
+console.log(maskCreditCard(343453463463463));
+console.log(maskCreditCard('13456786'));
+
+//Repeat
+const planesInLine = function (n) {
+  console.log(`There are ${n} planes in lines ${'🛫'.repeat(n)}`);
+};
+planesInLine(4);
+
+//Coding challenge
+/*
+underscore_case
+ first_name
+Some_Variable
+   calculate_AGE
+delayed_departure
+
+*/
+
+document.body.append(document.createElement('textarea'));
+document.body.append(document.createElement('button'));
+
+document.querySelector('button').addEventListener('click', function () {
+  const text = document.querySelector('textarea').value;
+  const rows = text.split('\n');
+  console.log(rows);
+  for (const [i, row] of rows.entries()) {
+    const [first, second] = row.toLowerCase().trim().split('_');
+    const outPut = `${first}${second.replace(
+      second[0],
+      second[0].toUpperCase()
+    )}`;
+    console.log(`${outPut.padEnd(20)}${'*'.repeat(i + 1)}`);
+  }
+});

@@ -1,0 +1,89 @@
+:root {
+  --night: #0a100d;
+  --ash: #b9baa3;
+  --timber: #d6d5c9;
+  --auburn: #a22c29;
+  --burnt: #902923;
+}
+
+body {
+  background-color: var(--timber);
+}
+h5 {
+  text-align: center;
+  font-size: large;
+}
+h3 {
+  text-align: center;
+  font-size: large;
+}
+
+#main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#main-header {
+  color: var(--burnt);
+}
+
+#icons-wrapper {
+  display: flex;
+  margin-top: 50px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 50px;
+}
+
+#buttons-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.add-person {
+  background-color: var(--ash);
+  border-radius: 4px;
+  padding: 3px 20px;
+  cursor: pointer;
+}
+.add-person:hover {
+  background-color: var(--night);
+  color: var(--ash);
+}
+.check-person {
+  background-color: var(--ash);
+  border-radius: 4px;
+  padding: 3px 20px;
+  cursor: pointer;
+}
+.check-person:hover {
+  background-color: var(--night);
+  color: var(--ash);
+}
+.remove-person {
+  background-color: var(--ash);
+  border-radius: 4px;
+  padding: 3px 20px;
+  cursor: pointer;
+}
+.remove-person:hover {
+  background-color: var(--auburn);
+  color: var(--ash);
+}
+.person-detail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+#text-input {
+  margin-top: 1%;
+  margin-bottom: 1%;
+}
+#container-check-line {
+  margin-top: 3%;
+}

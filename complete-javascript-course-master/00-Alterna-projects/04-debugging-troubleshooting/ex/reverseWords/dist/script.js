@@ -1,5 +1,7 @@
+//No returnaban nada
 function reverseWords(s) {
-  s.split(' ')
+  return s
+    .split(' ')
     .map(word => word.split('').reverse().join(''))
     .join(' ');
 }

@@ -38,48 +38,88 @@ Constrains:
   * 0 <= sr < m
   * 0 <= sc < n
 */
-var floodFill = function(image, sr, sc, newColor) {
+const floodFill = function (image, sr, sc, newColor) {
   let start = image[sr][sc];
-  let queue = [[sr,sc]];
+  let queue = [[sr, sc]];
   image[sr][sc] = newColor;
+  console.log();
   while (queue.length >= 0) {
-      let [x, y] = queue.shift();
-      processNeighbors(queue, image, x, y, start, newColor); 
+    let [x, y] = queue.shift();
+    processNeighbors(queue, image, x, y, start, newColor);
   }
   return image;
 };
 
 function processNeighbors(queue, image, sr, sc, start, newColor) {
-  if (isValid(image, sr-1, sc, start, newColor)) {
-      image[sr-1][sc] = newColor;
-      queue.push([sr-1, sc]);
+  if (isValid(image, sr - 1, sc, start, newColor)) {
+    image[sr - 1][sc] = newColor;
+    queue.push([sr - 1, sc]);
   }
-  if (isValid(image, sr+1, sc, start, newColor)) {
-      image[sr+1][sc] = newColor;
-      queue.push([sr+1, sc]);
+  if (isValid(image, sr + 1, sc, start, newColor)) {
+    image[sr + 1][sc] = newColor;
+    queue.push([sr + 1, sc]);
   }
-  if (isValid(image, sr, sc-1, start, newColor)) {
-      image[sr][sc-1] = newColor;
-      queeu.push([sr, sc-1]);
+  if (isValid(image, sr, sc - 1, start, newColor)) {
+    image[sr][sc - 1] = newColor;
+    //llamada de variable no existente
+    queue.push([sr, sc - 1]);
   }
-  if (isValid(image, sr, sc+1, start, newColor)) {
-      image[sr][sc+1] = newColor;
-      queeu.push([sr, sc+1]);
+  if (isValid(image, sr, sc + 1, start, newColor)) {
+    image[sr][sc + 1] = newColor;
+    queue.push([sr, sc + 1]);
   }
 }
 
 function isValid(image, x, y, startColor, newColor) {
-  if (x >= 0 && x < image.length && y >= 0 && y < image[0].length && image[x][y] === startColor && image[x][y] !== newColor) {
-      return false;
+  if (
+    x >= 0 &&
+    x < image.length &&
+    y >= 0 &&
+    y < image[0].length &&
+    image[x][y] === startColor &&
+    image[x][y] !== newColor
+  ) {
+    return false;
   } else {
-      return false;
+    return false;
   }
 }
 
 // calls
-console.log(floodFill([[1,1,1],[1,1,0],[1,0,1]], 1, 1, 2)); // [ [ 2, 2, 2 ], [ 2, 2, 0 ], [ 2, 0, 1 ] ]
-// console.log(floodFill([[0,0,0],[0,0,0]], 0, 0, 0)); // [[0,0,0],[0,0,0]]
-// console.log(floodFill([[0,0,0],[0,0,0]], 0, 0, 1)); // [[1,1,1],[1,1,1]]
+console.log(
+  floodFill(
+    [
+      [1, 1, 1],
+      [1, 1, 0],
+      [1, 0, 1],
+    ],
+    1,
+    1,
+    2
+  )
+); // [ [ 2, 2, 2 ], [ 2, 2, 0 ], [ 2, 0, 1 ] ]
+console.log(
+  floodFill(
+    [
+      [0, 0, 0],
+      [0, 0, 0],
+    ],
+    0,
+    0,
+    0
+  )
+); // [[0,0,0],[0,0,0]]
+console.log(
+  floodFill(
+    [
+      [0, 0, 0],
+      [0, 0, 0],
+    ],
+    0,
+    0,
+    1
+  )
+); // [[1,1,1],[1,1,1]]
 // console.log(floodFill([[1,1,1],[1,1,1],[1,1,2]], 1, 1, 3)); // [ [ 3, 3, 3 ], [ 3, 3, 3 ], [ 3, 3, 2 ] ]
 // console.log(floodFill([[1,1,1],[1,1,1],[1,1,2]], 2, 2, 3)); // [ [ 1, 1, 1 ], [ 1, 1, 1 ], [ 1, 1, 3 ] ]
 // console.log(floodFill([[0,0,0,0,0]], 0, 0, 1)); // [ [ 1, 1, 1, 1, 1 ] ]
