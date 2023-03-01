@@ -1,0 +1,7 @@
+docker exec -it mongodb bash
+mondod iniciar el servidor
+mongosh
+
+port 275, 285, 295
+
+mongod --replSet cookingSet --dbpath=/MONGO_DB_Course/data/rs2 --port 285 --oplogSize 200

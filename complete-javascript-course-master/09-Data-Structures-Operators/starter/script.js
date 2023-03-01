@@ -1,8 +1,5 @@
 'use strict';
 const nested = [2, 4, [5, 8]];
-// Data needed for a later exercise
-const flights =
-  '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
 
 // Data needed for first part of the section
 //compute
@@ -427,9 +424,9 @@ console.log(restMap.size);
 //memory heap
 const arr3 = [1, 2];
 restMap.set(arr3, 'test');
-restMap.set(document.querySelector('h1'), 'Heading');
-console.log(restMap);
-console.log(restMap.get(arr3));
+// restMap.set(document.querySelector('h1'), 'Heading');
+// console.log(restMap);
+// console.log(restMap.get(arr3));
 
 const question = new Map([
   ['question', 'What is the best programming language in the world ?'],
@@ -636,19 +633,111 @@ delayed_departure
 
 */
 
-document.body.append(document.createElement('textarea'));
-document.body.append(document.createElement('button'));
+// document.body.append(document.createElement('textarea'));
+// document.body.append(document.createElement('button'));
 
-document.querySelector('button').addEventListener('click', function () {
-  const text = document.querySelector('textarea').value;
-  const rows = text.split('\n');
-  console.log(rows);
-  for (const [i, row] of rows.entries()) {
-    const [first, second] = row.toLowerCase().trim().split('_');
-    const outPut = `${first}${second.replace(
-      second[0],
-      second[0].toUpperCase()
-    )}`;
-    console.log(`${outPut.padEnd(20)}${'*'.repeat(i + 1)}`);
+// document.querySelector('button').addEventListener('click', function () {
+//   const text = document.querySelector('textarea').value;
+//   const rows = text.split('\n');
+//   console.log(rows);
+//   for (const [i, row] of rows.entries()) {
+//     const [first, second] = row.toLowerCase().trim().split('_');
+//     const outPut = `${first}${second.replace(
+//       second[0],
+//       second[0].toUpperCase()
+//     )}`;
+//     console.log(`${outPut.padEnd(20)}${'*'.repeat(i + 1)}`);
+//   }
+// });
+///////////////////////////////////////
+// String Methods Practice
+
+const flights =
+  '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
+
+// 🔴 Delayed Departure from FAO to TXL (11h25)
+//              Arrival from BRU to FAO (11h45)
+//   🔴 Delayed Arrival from HEL to FAO (12h05)
+//            Departure from FAO to LIS (12h30)
+
+const getCode = str => str.slice(0, 3).toUpperCase();
+
+for (const fligth of flights.split('+')) {
+  const [type, from, to, time] = fligth.split(';');
+  const outPut = `${type.startsWith('_Delayed') ? '🔴' : ''}${type.replaceAll(
+    '_',
+    ' '
+  )} ${getCode(from)} to ${getCode(to)} (${time.replace(':', 'h')})`.padStart(
+    40
+  );
+  console.log(outPut);
+}
+//closures
+const miContador = (function () {
+  let _contador = 0;
+  function incrementar() {
+    return _contador++;
   }
-});
+  function decrementar() {
+    return _contador++;
+  }
+  function valor() {
+    return _contador;
+  }
+  return { incrementa: incrementar, decrementar, valor };
+})();
+miContador.incrementa();
+miContador.incrementa();
+miContador.incrementa();
+miContador.incrementa();
+console.log(miContador.valor());
+
+//
+
+let bookings = [];
+
+const createBooking = function (
+  flightNum,
+  numPassengers = 1,
+  price = 200 * numPassengers
+) {
+  //ES5
+  //price = price || 199
+  const booking = {
+    flightNum,
+    numPassengers,
+    price,
+  };
+  console.log(booking);
+  bookings.push(booking);
+};
+createBooking('LH123', 3);
+createBooking('LH123', 5, 900);
+createBooking('LH123', undefined, 700);
+//
+const flight1 = 'LH123';
+const jonas = {
+  name: 'Marcos Lora',
+  passport: 123214234,
+};
+const checkIn = function (flightNum, passenger) {
+  flightNum = 'LH999';
+  passenger.name = 'Mr. ' + passenger.name;
+  if (passenger.passport === 123214234) {
+    console.log('Checked in');
+  } else {
+    console.log('Wrong passport');
+  }
+};
+checkIn(flight1, jonas);
+console.log(flight1);
+console.log(jonas);
+
+const flightNum = flight1;
+const passenger = jonas;
+
+const newPassport = function (person) {
+  person.passport = Math.trunc(Math.random() * 10000);
+};
+newPassport(jonas);
+checkIn(flight1, jonas);
