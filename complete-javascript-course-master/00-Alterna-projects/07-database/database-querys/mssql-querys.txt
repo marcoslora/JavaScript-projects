@@ -1,0 +1,440 @@
+use Northwind;
+SELECT * FROM Customers;
+SELECT CompanyName As [Nombre de la compania], Address As Direccion FROM Customers As Clientes;
+SELECT A.FirstName, A.LastName FROM Employees As A;
+-- DISTINCT valores distintos
+SELECT DISTINCT 
+P.UnitPrice 
+FROM 
+Products As P;
+SELECT DISTINCT 
+o.ShipCity 
+FROM Orders AS o;
+SELECT * FROM Orders As O where O.ShipCountry = 'USA';
+SELECT O.ShipRegion 
+FROM 
+Orders As O 
+where O.ShipCountry = 'USA';
+SELECT DISTINCT O.ShipRegion, o.ShipCity 
+FROM 
+Orders As O 
+where O.ShipCountry = 'USA';
+SELECT DISTINCT O.ShipRegion, o.ShipCity 
+FROM 
+Orders As O 
+where O.ShipCountry = 'BRAZIL';
+SELECT O.ShipRegion 
+FROM 
+Orders As O 
+where O.ShipCountry = 'USA' OR O.ShipCountry = 'BRAZIL';
+SELECT O.ShipRegion 
+FROM 
+Orders As O 
+where O.ShipCountry = 'USA' AND O.ShipCity = 'Seattle';
+SELECT * 
+FROM 
+Orders As O 
+where O.ShipCountry = 'FRANCE' OR O.ShipCity = 'Rio de Janeiro';
+SELECT * FROM Orders As O WHERE O.ShipCountry = 'FRANCE' OR O.ShipCountry = 'USA' OR O.ShipCountry = 'BRAZIL';
+-- IN funciona con numero
+SELECT * 
+FROM 
+Orders As O WHERE o.ShipCountry IN ('FRANCE', 'USA', 'BRAZIL');
+
+SELECT * FROM Products As P WHERE P.UnitPrice IN (10,18);
+SELECT * FROM Products As P WHERE P.UnitPrice > 10;
+SELECT * FROM Products As P WHERE P.UnitPrice >= 10 AND P.UnitPrice <= 18;
+SELECT * FROM Products As P WHERE P.UnitPrice != 10 AND P.UnitPrice > 1 AND P.UnitPrice < 20;
+SELECT ProductName FROM Products As P WHERE P.UnitPrice BETWEEN 50 AND 80;
+SELECT * FROM Suppliers As S WHERE S.Fax IS NOT NULL;
+SELECT * FROM Suppliers AS S WHERE S.City = 'LONDON';
+SELECT A.CategoryName, A.Description FROM Categories As A;
+SELECT CustomerID, ShippedDate FROM Orders AS A;
+SELECT A.ContactTitle, A.ContactName FROM Customers AS A;
+SELECT A.ShippedDate FROM Orders AS A WHERE A.ShippedDate BETWEEN '1996 'AND '1998';
+SELECT A.ShippedDate FROM Orders AS A WHERE DAY(A.ShippedDate) = 13 AND MONTH(A.ShippedDate)= 1 AND YEAR(A.ShippedDate) = 1996;
+--Hora
+SELECT
+    DATEPART(HOUR, OrderDate),
+    DATEPART(SECOND, OrderDate)
+FROM
+    Orders;
+SELECT * FROM Suppliers AS A WHERE A.PostalCode IN ('48104', '33007','3058');
+SELECT * FROM Products AS P where P.UnitsInStock < 10 and P.UnitPrice < 40 and P.Discontinued != 1;
+SELECT * FROM Employees as A WHERE YEAR(A.BirthDate) BETWEEN 1950 AND 1960 AND A.Country = 'USA';
+
+SELECT * FROM Employees AS A WHERE 2023 - YEAR(A.BirthDate)  > 50;
+--DAte
+SELECT
+    DATEDIFF(YEAR, A.BirthDate, GETDATE())
+FROM
+    Employees as A
+WHERE
+    DATEDIFF(YEAR, A.BirthDate, GETDATE()) > 50;
+
+SELECT 
+DATEDIFF(YEAR, A.BirthDate, GETDATE()) as ano, 
+DATEDIFF(MONTH, A.BirthDate, GETDATE()) as mes, 
+DATEDIFF(DAY, A.BirthDate, GETDATE()) as dia,
+DATEDIFF(HOUR, A.BirthDate, GETDATE()) as Hora 
+FROM Employees AS A;
+SELECT * FROM STRING_SPLIT('WARLYN|MARINO', '|');
+--Representa las letras q no conozca
+SELECT * FROM Customers WHERE Country LIKE '__';
+--%trae todo q sea igual
+SELECT * FROM Customers WHERE CompanyName LIKE 'bo%';
+SELECT * FROM Customers WHERE CompanyName LIKE '%ts';
+SELECT * FROM Customers WHERE CompanyName LIKE '%Dollar%';
+SELECT * FROM Customers WHERE CompanyName NOT LIKE '%Dollar%';
+SELECT * FROM Products AS A WHERE A.Discontinued = 0 ORDER BY
+    A.UnitPrice DESC, A.SupplierID DESC,
+    A.CategoryID ASC;
+
+SELECT A.UnitPrice, A.SupplierID, A.CategoryID FROM Products AS A WHERE A.Discontinued = 0 ORDER BY
+    A.UnitPrice DESC, 
+    A.SupplierID DESC,
+    A.CategoryID ASC;
+--Se usan [] para poder introducir espacios en blanco
+SELECT
+      [FirstName]
+      ,[LastName]
+      ,DATEDIFF(YEAR, [BirthDate], GETDATE()) AS Año
+FROM 
+    Employees
+ORDER BY
+    DATEDIFF(YEAR, [BirthDate], GETDATE()) DESC;
+
+GO
+-- CREATE VIEW EmployeeWithAge AS
+-- SELECT 
+--     FirstName AS Nombre,
+--     LastName AS Apellido,
+--     DATEDIFF(YEAR, BirthDate, GETDATE()) AS Edad
+-- FROM 
+--     Employees;
+GO
+
+SELECT * FROM EmployeeWithAge;
+
+EXEC SP_HELPTEXT 'EmployeesWithAge';
+
+--DELETE FROM [Product]
+--TRUNCATE TABLE [Product]
+
+DROP VIEW  EmployeeWithAge;
+GO
+CREATE VIEW DiscontinuedP
+AS
+SELECT 
+    A.ProductName,
+    A.UnitPrice
+FROM 
+    Products AS A
+WHERE
+    A.Discontinued = 1;
+GO
+
+SELECT * FROM DiscontinuedP;
+--TOP DEVUELVE LO Q LE PONGAS SELECT TOP 10
+SELECT TOP 4
+    A.ProductName 
+FROM
+    Products AS A
+ORDER BY 
+    1 DESC
+GO
+SELECT
+    MAX(A.ProductName)
+FROM
+    Products AS A;
+
+SELECT SUM(A.UnitPrice)
+FROM Products AS A;
+--CUENTA LOS REGISTRO Q HAY
+SELECT COUNT(*)
+FROM Products AS A;
+--AVG, MIN, MAX, COUNT, SUM
+
+SELECT
+    A.SupplierID,
+    SUM(A.UnitPrice)
+FROM
+    Products AS A
+GROUP BY
+    A.SupplierID
+ORDER BY
+    --ORDENARLO POR LA COLUMNA 2
+    2 DESC
+
+GO
+
+SELECT
+    A.ProductName,
+    A.UnitPrice
+FROM
+    Products AS A
+ORDER BY
+    1 DESC;
+--
+SELECT
+    *
+FROM
+    Products AS A
+ORDER BY
+    CategoryID DESC, SupplierID DESC
+
+GO
+
+SELECT
+    A.CategoryID,
+    A.SupplierID,
+    SUM(A.UnitPrice)
+FROM
+    Products AS A
+GROUP BY
+    A.CategoryID,
+    A.SupplierID
+ORDER BY
+    3 DESC
+
+GO
+
+SELECT
+    A.ProductName,
+    A.UnitPrice
+FROM
+    Products AS A
+ORDER BY
+    1 DESC;
+
+SELECT
+    *
+FROM
+    Products AS A
+ORDER BY
+    SupplierID DESC,
+    A.CategoryID DESC
+
+GO
+
+SELECT
+    A.SupplierID,
+    A.CategoryID,
+    SUM(A.UnitPrice)
+FROM
+    Products AS A
+    --Suma los valores q son iguales-- buscar
+GROUP BY
+    A.SupplierID,
+    A.CategoryID
+ORDER BY
+    1 DESC,
+    2 DESC
+
+GO
+
+SELECT
+    A.ProductName,
+    A.UnitPrice
+FROM
+    Products AS A
+ORDER BY
+    1 DESC
+
+--JOINS
+SELECT
+    Products.SupplierID,
+    Products.ProductName,
+    Suppliers.CompanyName,
+    SUM(Products.UnitPrice) AS Total
+FROM
+    Products 
+    RIGHT JOIN Suppliers
+    ON Products.SupplierID = Suppliers.SupplierID AND 
+       Products.ProductName = Suppliers.CompanyName
+GROUP BY
+    Products.SupplierID,
+    Products.ProductName,
+    Suppliers.CompanyName
+--
+SELECT
+    Products.SupplierID,
+    Products.ProductName,
+    Suppliers.CompanyName,
+    SUM(Products.UnitPrice) AS Total
+FROM
+    Products 
+    LEFT JOIN Suppliers
+    ON Products.SupplierID = Suppliers.SupplierID AND 
+       Products.ProductName = Suppliers.CompanyName
+GROUP BY
+    Products.SupplierID,
+    Products.ProductName,
+    Suppliers.CompanyName
+--Desglosar los joins
+SELECT
+    Products.ProductName,
+    Suppliers.CompanyName,
+    Categories.CategoryName,
+    SUM(Products.UnitPrice) AS Total
+FROM
+    Products 
+    JOIN Suppliers
+    ON Products.SupplierID = Suppliers.SupplierID
+    JOIN Categories
+    ON Products.CategoryID = Categories.CategoryID
+GROUP BY
+    Products.ProductName,
+    Suppliers.CompanyName,
+    Categories.CategoryName
+--Ejercicios
+--Devolver del detalle de las ordenes, el nombre
+--del producto,categoria del producto,nombre del suplidor 
+--del producto ,la suma de la cantidad que se vendio en cada 
+--orden, la fecha de envio de la orden y recuerden filtrar
+--por los producto que no estan descontinuados
+SELECT 
+    o.OrderID, 
+    p.ProductName, 
+    c.CategoryName, 
+    s.CompanyName, 
+    SUM(od.UnitPrice) Total, 
+    o.ShippedDate
+FROM 
+    Orders o 
+    INNER JOIN [Order Details] od ON o.OrderID = od.OrderID 
+    INNER JOIN Products p ON od.ProductID = p.ProductID 
+    INNER JOIN Categories c ON p.CategoryID = c.CategoryID 
+    INNER JOIN Suppliers s ON p.SupplierID = s.SupplierID
+WHERE 
+    p.Discontinued = 0
+GROUP BY 
+    o.OrderID, 
+    p.ProductName, 
+    c.CategoryName, 
+    s.CompanyName, 
+    o.ShippedDate
+ORDER BY
+    1 ASC;
+
+SELECT SUM(o.Quantity) FROM [Order Details] as o;
+--Solucion
+SELECT
+    Products.ProductName, 
+    Categories.CategoryName, 
+    Suppliers.CompanyName,
+    Orders.OrderDate,
+    SUM([Order Details].Quantity) AS [Total vendidos]
+FROM
+    [Order Details] 
+    JOIN Orders 
+    ON Orders.OrderID = [Order Details].OrderID
+    JOIN Products 
+    ON Products.ProductID = [Order Details].ProductID
+    JOIN Categories 
+    ON Products.CategoryID = Categories.CategoryID
+    JOIN Suppliers
+    ON Products.SupplierID = Suppliers.SupplierID
+WHERE
+    Products.Discontinued = 0
+GROUP BY
+    Products.ProductName, 
+    Categories.CategoryName, 
+    Orders.OrderDate,
+    Suppliers.CompanyName
+ORDER BY
+    1 ASC;
+--create procedure todos los comandos sql y llamarlo luego
+GO
+CREATE PROCEDURE Example
+AS
+SELECT
+    FirstName,
+    LastName,
+    Title
+FROM
+    Employees;
+
+EXEC Example;
+GO
+SP_HELPTEXT 'Example';
+GO
+ALTER PROCEDURE Example
+(
+    @Edad INT = 75,
+    @NombreMio VARCHAR(30)
+)
+AS
+SELECT
+    FirstName,
+    LastName,
+    Title,
+    DATEDIFF(YEAR, BirthDate, GETDATE()) Edad
+FROM
+    Employees
+WHERE
+    DATEDIFF(YEAR, BirthDate, GETDATE()) = @Edad
+GO
+ALTER PROCEDURE Example
+(
+    @Edad INT = 75,
+    @NombreMio VARCHAR(30)
+)
+AS
+SELECT
+    FirstName,
+    LastName,
+    Title,
+    DATEDIFF(YEAR, BirthDate, GETDATE()) Edad
+FROM
+    Employees
+WHERE
+    DATEDIFF(YEAR, BirthDate, GETDATE()) =  @EDAD
+GO
+ALTER PROCEDURE Example
+(
+    @Edad INT = 75,
+    @NombreMio VARCHAR(30)
+)
+AS
+SELECT
+    FirstName,
+    LastName,
+    Title,
+    @NombreMio,
+    DATEDIFF(YEAR, BirthDate, GETDATE()) Edad
+FROM
+    Employees
+WHERE
+    DATEDIFF(YEAR, BirthDate, GETDATE()) = @Edad
+
+GO
+EXEC Example @Edad=63, @NombreMio = 'AAAA';
+GO
+ALTER PROCEDURE Example2
+(
+    @City VARCHAR(10)
+)
+AS
+SELECT
+    *
+FROM
+    Employees
+WHERE
+    Employees.City = @City;
+
+EXEC Example2 @City = 'Tacoma';
+GO
+CREATE PROCEDURE MULTIPLICAR
+(
+    @PRIMERVALOR INT,
+    @SEGUNDOVALOR INT
+)
+AS
+SELECT (@PRIMERVALOR * @SEGUNDOVALOR);
+
+GO
+
+MULTIPLICAR @PRIMERVALOR = 10, @SEGUNDOVALOR = 10;
+--Stored procedure investigar
+DBCC CHECKIDENT ('products', RESEED, 1);

@@ -1,0 +1,60 @@
+MongoDB
+
+Databases
+Collections is like a tables in SQL
+Delete database: db.dropDatabase()
+commands:
+use name
+show dbs
+show collections
+db.dropDatabase()
+exit
+db.users.insertOne({name:"Marcos"})
+db.users.find()
+db.users.insertOne({name: "Sally", age:19, address: {street: "987 North St"}, hobbies: ["Running"]})
+db.users.insertMany([{name:'Jill'}, {name: 'Juan'}])
+db.users.find().limit(2)
+db.users.find().sort({age: -1, name: -1}).limit(2)
+db.facturas.find().sort({'cliente.apellido': 1})
+db.users.find().skip(1).limit(2)
+db.users.find({ name: ‘Marcos’ })
+db.users.find({name: 'Sally'}, {name:1, age: 1, _id: 0}) seleccionando los campos a mostrar
+db.users.find({name: 'Sally'}, {name: 0}) toma todos los campos menos
+$eq equal 
+db.users.find({ name: { $ne: 'Marcos' }}))
+$ne not equal 
+db.users.find({ name: { $ne: 'Marcos' }})
+$gt mas grande
+$gte mas grande igual
+$lte less than or equal to
+$lt less than
+db.users.find({ age: { $gte: 20, $lte: 40 }, name: ‘Sally’})
+$in
+db.users.find({ name: { $in: ['Marcos', ‘Sally’] }})
+$nin not in
+$exists: true revisa las keys return true aunque el value sea null
+db.users.find({ name: { $ne: 'Marcos' }})
+db.facturas.find({$and: [{"nroFactura":1000}, {"cliente.nombre":"Marina"} ]})
+db.facturas.find({$or: [{"nroFactura":1001}, {"cliente.nombre":"Marina"} ]})
+db.facturas.find({$and: [{"condPago":"CONTADO"},{"cliente.region":"CABA"}]})
+
+db.facturas.updateOne({"nroFactura":1000}, {$unset: {fechaEmision: ""}})
+
+db.facturas.updateMany({"nroFactura":1000}, {$unset: {fechaEmision: ""}})
+
+
+db.facturas.find({"fechaEmision": {$exists: false}})
+
+db.facturas.updateOne({"nroFactura":1000}, {$inc: {"cliente.edad": 25}})
+incrementar
+db.facturas.updateMany({"nroFactura":’’}, {$set: {"cliente.edad":2}})
+
+Borrar
+db.facturas.deleteOne({"nroFactura":1000})
+db.facturas.deleteMany({})
+db.dropDatabase()
+db.users.replaceOne({ age: 12 }, { age: 13 }) 	
+db.personas.updateMany({edad:23}, {$push:{ "direcciones":[ {"calleNo":15, "Calle":"Primaria", "Sector":"Cuidad de dios", "Referencia":"Donde beben romo", "Provincia":"San Juan De La Maguana"]}}})
+update dentro de un array
+db.collection.updateOne({ "direccion.sector": "Tropical del este" }, $set: { "direccion.$.sector": "Nuevo sector" } })
+db.personas.updateMany({}, { $pull: { "direcciones": { Sector: "Nueva Casa", CalleNo: 25 } } })
