@@ -1,0 +1,5 @@
+00-Alterna-projects/08-front-end/reactjs-own
+crear projecto de React con create-react-app
+npx create-react-app react-course
+cd react-course
+npm start
