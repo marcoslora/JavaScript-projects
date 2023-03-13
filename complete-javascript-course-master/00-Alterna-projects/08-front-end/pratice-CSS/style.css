@@ -1,0 +1,14 @@
+.button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: blue;
+  color: white;
+}
+
+.button:hover {
+  background-color: green;
+}
+footer {
+  background: #e47f2b;
+  height: 20px;
+}
