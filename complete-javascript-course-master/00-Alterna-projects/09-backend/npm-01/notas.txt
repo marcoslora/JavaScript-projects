@@ -1,3 +1,5 @@
+cd 00-Alterna-projects/09-backend/npm-01/
+
 npm init -y
 crear index.js
 npm install express
