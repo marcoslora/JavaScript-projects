@@ -1,0 +1,3 @@
+cd react/Hooks-practice/hooks-practice/
+
+npm run dev

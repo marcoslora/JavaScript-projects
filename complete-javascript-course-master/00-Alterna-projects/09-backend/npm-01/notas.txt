@@ -1,0 +1,9 @@
+npm init -y
+crear index.js
+npm install express
+index.js app
+npm install typescript
+index.js a index.ts
+npx tsc --init
+
+npm run dev
