@@ -1,32 +1,67 @@
-import express, { Express, Request, Response } from 'express';
+import express, { Request, Response } from 'express';
 
-const app: Express = express();
+const app = express();
+
 const port = 3000;
 
 interface Heroe {
-  id: number;
-  nombre: string;
-  alias: string;
+  id: Number;
+  nombre: String;
+  alte: String;
 }
 
-const heroes = [
-  { id: 1, nombre: 'Clark Kent', alias: 'SuperMan' },
-  { id: 2, nombre: 'Bruno Diaz', alias: 'Batman' },
+const heroes: Heroe[] = [
+  {
+    id: 1,
+    nombre: 'Bruce Wayne',
+    alte: 'Batman',
+  },
+  {
+    id: 2,
+    nombre: 'Damian Wayne',
+    alte: 'Robin',
+  },
+  {
+    id: 3,
+    nombre: 'Clark Kent',
+    alte: 'SuperMan',
+  },
 ];
-app.get('/', function (req: Request, res: Response) {
-  res.send('Hello World');
-});
 
-app.get('/heroe', function (req: Request, res: Response) {
+app.get('/heroe', (req: Request, res: Response) => {
   res.json(heroes);
 });
-app.get('/heroe:nombre', function (req: Request, res: Response) {
-  const nombre = req.params.nombre;
+
+app.get('/heroe/:alte', (req: Request, res: Response) => {
+  const alte = req.params.alte;
+
   const heroe = heroes.find(
-    (hero: Heroe) => hero.nombre.toLowerCase() === nombre.toLowerCase()
+    (hero: Heroe) => hero.alte.toLowerCase() === alte.toLowerCase()
   );
+
+  if (!heroe) {
+    return res.status(404).json({
+      message: 'Super Hero Not Found',
+    });
+  }
+
   res.json(heroe);
 });
+
+app.get('/heroesearch/:alte', (req: Request, res: Response) => {
+  const inputF = req.params.alte;
+
+  const heroe = heroes.filter((t: Heroe) => t.alte.startsWith(inputF));
+
+  if (!heroe) {
+    return res.status(404).json({
+      message: 'Super Hero Not Found',
+    });
+  }
+
+  res.json(heroe);
+});
+
 app.listen(port, () => {
-  console.log(`port ${port}`);
+  console.log(`The application is listening on port ${port}!`);
 });
