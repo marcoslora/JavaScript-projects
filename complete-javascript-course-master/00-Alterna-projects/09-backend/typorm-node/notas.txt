@@ -1,0 +1,22 @@
+npm init -y crear el pack json
+npm i express framework de node express para recibir y enviar peticiones
+
+npm i typescript -D  instala typescript como dependencia de producion
+
+npx tsc --init
+tsc --init typescript compiler creamos oara decirle como compilarlo
+
+npx tsc para compilarlo
+node dist/index.js
+
+npm i ts-node-dev -D vigila y ejecuta por nosotros igual q nodemon pero para ts
+
+npm i express morgan cors
+morgan ver la peticiones que van llegando
+cors comunicarse con servidores externos
+
+npm i @types/express @types/morgan @types/cors -D añade los tipos a express para volverlo ts
+
+typeorm seguir los pasos de instalacion
+entities son las tablas que typeorm genera por nosotros
+npm run dev

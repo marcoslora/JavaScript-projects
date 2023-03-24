@@ -8,4 +8,14 @@ npm install typescript
 index.js a index.ts
 npx tsc --init
 
-npm run dev
+npm install typeorm --save
+
+npm run serve
+
+base de datos clave
+<M@rcos0625.>
+
+DB_USER = sa;
+DB_PASSWORD = <M@rcos0625.>;
+DB_SERVER = localhost;
+DB_DATABASE = webstore;

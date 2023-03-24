@@ -1,66 +1,12 @@
-import express, { Request, Response } from 'express';
-
-const app = express();
+import express from 'express';
+import { heroeRoute } from './src/heroe/routes';
 
 const port = 3000;
+const app = express();
 
-interface Heroe {
-  id: Number;
-  nombre: String;
-  alte: String;
-}
+app.use(express.json());
 
-const heroes: Heroe[] = [
-  {
-    id: 1,
-    nombre: 'Bruce Wayne',
-    alte: 'Batman',
-  },
-  {
-    id: 2,
-    nombre: 'Damian Wayne',
-    alte: 'Robin',
-  },
-  {
-    id: 3,
-    nombre: 'Clark Kent',
-    alte: 'SuperMan',
-  },
-];
-
-app.get('/heroe', (req: Request, res: Response) => {
-  res.json(heroes);
-});
-
-app.get('/heroe/:alte', (req: Request, res: Response) => {
-  const alte = req.params.alte;
-
-  const heroe = heroes.find(
-    (hero: Heroe) => hero.alte.toLowerCase() === alte.toLowerCase()
-  );
-
-  if (!heroe) {
-    return res.status(404).json({
-      message: 'Super Hero Not Found',
-    });
-  }
-
-  res.json(heroe);
-});
-
-app.get('/heroesearch/:alte', (req: Request, res: Response) => {
-  const inputF = req.params.alte;
-
-  const heroe = heroes.filter((t: Heroe) => t.alte.startsWith(inputF));
-
-  if (!heroe) {
-    return res.status(404).json({
-      message: 'Super Hero Not Found',
-    });
-  }
-
-  res.json(heroe);
-});
+app.use('/heroe', heroeRoute);
 
 app.listen(port, () => {
   console.log(`The application is listening on port ${port}!`);
