@@ -19,4 +19,6 @@ npm i @types/express @types/morgan @types/cors -D añade los tipos a express par
 
 typeorm seguir los pasos de instalacion
 entities son las tablas que typeorm genera por nosotros
+
+"strictPropertyInitialization": false typeorm no necesita tener un constructor para usar los decoradores
 npm run dev

@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.villainRoute = void 0;
+const express_1 = require("express");
+const controller_1 = require("./controller");
+exports.villainRoute = (0, express_1.Router)();
+exports.villainRoute.get('/', controller_1.getAll);
+exports.villainRoute.get('/name/:villainName', controller_1.getByName);
+exports.villainRoute.get('/:id', controller_1.getById);
+exports.villainRoute.post('/', controller_1.create);
+exports.villainRoute.delete('/:id', controller_1.remove);
+exports.villainRoute.put('/:id', controller_1.update);

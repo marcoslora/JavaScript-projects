@@ -1,4 +1,15 @@
 import { DataSource } from 'typeorm';
+import { User } from './entities/User';
+
+interface DataSourceOptions {
+  fallbackToDefaultDb?: boolean;
+  trustServerCertificate?: boolean;
+  encrypt?: boolean;
+}
+const options: DataSourceOptions = {
+  encrypt: true,
+  trustServerCertificate: true,
+};
 
 export const AppDataSource = new DataSource({
   type: 'mssql',
@@ -7,7 +18,8 @@ export const AppDataSource = new DataSource({
   username: 'sa',
   password: '<M@rcos0625.>',
   database: 'typeormdb',
-  synchronize: true,
   logging: true,
-  entities: [],
+  synchronize: true,
+  entities: [User],
+  options: options,
 });

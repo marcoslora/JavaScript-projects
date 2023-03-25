@@ -19,3 +19,6 @@ DB_USER = sa;
 DB_PASSWORD = <M@rcos0625.>;
 DB_SERVER = localhost;
 DB_DATABASE = webstore;
+
+Se utiliza para ver el ts los errores
+npx tsc -w

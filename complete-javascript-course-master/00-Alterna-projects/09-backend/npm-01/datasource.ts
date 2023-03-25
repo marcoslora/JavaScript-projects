@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 import { DataSource } from 'typeorm';
-import { Heroe } from './src/models/heroe.entity';
+import { Hero } from './src/models/hero.entity';
+import { Villain } from './src/models/villian.entity';
 
 export const AppDataSource = new DataSource({
   type: 'mssql',
@@ -9,13 +10,8 @@ export const AppDataSource = new DataSource({
   username: 'sa',
   password: '<M@rcos0625.>',
   database: 'backendalterna',
-  entities: [Heroe],
+  synchronize: true,
+  entities: [Hero, Villain],
   logging: false,
   options: { encrypt: false },
 });
-
-AppDataSource.initialize()
-  .then(() => {
-    console.log('Conecticion establecida');
-  })
-  .catch(error => console.log(error));
