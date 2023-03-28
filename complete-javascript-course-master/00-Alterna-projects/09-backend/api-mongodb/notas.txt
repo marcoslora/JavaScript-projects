@@ -1,0 +1,15 @@
+npm init -y
+npm i express
+npm i typescript
+npx tsc --init
+npm i mongoose
+
+npm install typeorm --save
+npm install reflect-metadata --save
+npm install @types/node --save-dev
+
+
+mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.8.0
+
+
+npm i @types/express @types/mongoose @types/node ts-node -D 

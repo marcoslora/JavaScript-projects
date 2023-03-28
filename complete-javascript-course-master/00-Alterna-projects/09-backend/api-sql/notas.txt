@@ -1,4 +1,4 @@
-cd 00-Alterna-projects/09-backend/npm-01/
+cd 00-Alterna-projects/09-backend/api-sql/
 
 npm init -y
 crear index.js
@@ -9,6 +9,8 @@ index.js a index.ts
 npx tsc --init
 
 npm install typeorm --save
+npm install reflect-metadata --save
+npm install @types/node --save-dev
 
 npm run serve
 
