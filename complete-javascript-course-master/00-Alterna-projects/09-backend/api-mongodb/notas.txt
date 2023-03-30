@@ -1,3 +1,5 @@
+cd 00-Alterna-projects/09-backend/api-mongodb  
+
 npm init -y
 npm i express
 npm i typescript
@@ -7,9 +9,16 @@ npm i mongoose
 npm install typeorm --save
 npm install reflect-metadata --save
 npm install @types/node --save-dev
-
+npm i --save-dev @types/morgan
 
 mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.8.0
 
 
 npm i @types/express @types/mongoose @types/node ts-node -D 
+
+
+autoincrement
+npm install --save mongoose-sequence
+npm i --save-dev @types/mongoose-sequence
+
+https://github.com/ramiel/mongoose-sequence#requiring

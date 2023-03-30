@@ -1,15 +1,10 @@
 import { Schema, model } from 'mongoose';
 
 const PersonajeSchema = new Schema({
-  name: { type: String, require: true },
-  alte: { type: String, require: true },
-  role: { type: String, require: true },
+  name: { type: String, required: true },
+  alte: { type: String, required: true },
+  role: { type: String, required: true },
+  id: { type: Number },
 });
-
-/* UserSchema.methods.toJSON = function () {
-  const { __v, password, _id, ...user } = this.toObject();
-  user.uid = _id;
-   return user;
-}; */
 
 export const personajeModel = model('Personaje', PersonajeSchema);
