@@ -19,4 +19,5 @@ git pull origin <branch>; jala del branch los archivos
 git diff; para ver los cambios
 git diff <branch>; para ver las diferencias entre branch
 git pull request; se hace en pagina para unir los branch
-git switch; cambia de branch 
+git switch; cambia de branch
+h
