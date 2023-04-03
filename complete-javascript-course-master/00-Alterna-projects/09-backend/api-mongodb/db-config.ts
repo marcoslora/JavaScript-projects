@@ -4,7 +4,7 @@ import 'reflect-metadata';
 export const dbConnection = async () => {
   try {
     await mongoose.connect(
-      'mongodb://localhost:27017/?authMechanism=DEFAULT&authSource=alterna'
+      'mongodb://root:example@localhost:27017/?authMechanism=DEFAULT'
     );
     console.log('Connection Success');
   } catch (error) {

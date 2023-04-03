@@ -16,7 +16,7 @@ export const AppDataSource = new DataSource({
   host: 'localhost',
   port: 1433,
   username: 'sa',
-  password: '<M@rcos0625.>',
+  password: 'Sa123456',
   database: 'typeormdb',
   logging: true,
   synchronize: true,
