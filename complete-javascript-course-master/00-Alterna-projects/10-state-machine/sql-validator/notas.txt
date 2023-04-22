@@ -1,0 +1,1 @@
+cd 00-Alterna-projects/10-state-machine/sql-validator/

@@ -1,100 +1,5 @@
-console.log('Hola');
-
-// type TokenType =
-//   | 'SELECT'
-//   | 'FROM'
-//   | 'WHERE'
-//   | 'COLUMN_NAME'
-//   | 'TABLE_NAME'
-//   | 'OPERATOR'
-//   | 'VALUE'
-//   | 'EOF';
-
-// type Token = {
-//   type: TokenType;
-//   value: any;
-// };
-
-// class RecursiveDescentParser {
-//   private index: number;
-//   private tokens: Token[];
-
-//   constructor(tokens: Token[]) {
-//     this.index = 0;
-//     this.tokens = tokens;
-//   }
-
-//   currentToken(): Token {
-//     return this.tokens[this.index];
-//   }
-
-//   nextToken(): Token {
-//     this.index++;
-//     return this.currentToken();
-//   }
-
-//   expectToken(type: TokenType): Token {
-//     const token = this.currentToken();
-//     if (token.type !== type) {
-//       throw new Error(
-//         `Unexpected token type: expected ${type}, got ${token.type}`
-//       );
-//     }
-//     this.nextToken();
-//     return token;
-//   }
-
-//   parse(): any {
-//     return this.parseSelectStatement();
-//   }
-
-//   parseSelectStatement(): any {
-//     this.expectToken('SELECT');
-//     const column = this.expectToken('COLUMN_NAME');
-//     this.parseFromClause();
-//     const where = this.parseWhereClause();
-//     return { type: 'select', column, where };
-//   }
-
-//   parseFromClause(): any {
-//     this.expectToken('FROM');
-//     this.expectToken('TABLE_NAME');
-//   }
-
-//   parseWhereClause(): any | null {
-//     if (this.currentToken().type === 'WHERE') {
-//       this.nextToken();
-//       return this.parseCondition();
-//     }
-//     return null;
-//   }
-
-//   parseCondition(): any {
-//     const column = this.expectToken('COLUMN_NAME');
-//     const operator = this.expectToken('OPERATOR');
-//     const value = this.expectToken('VALUE');
-//     return { type: 'condition', column, operator, value };
-//   }
-// }
-
-// // Example usage
-// const tokens: Token[] = [
-//   { type: 'SELECT', value: 'SELECT' },
-//   { type: 'COLUMN_NAME', value: 'column1' },
-//   { type: 'FROM', value: 'FROM' },
-//   { type: 'TABLE_NAME', value: 'table2' },
-//   { type: 'WHERE', value: 'WHERE' },
-//   { type: 'COLUMN_NAME', value: 'column2' },
-//   { type: 'OPERATOR', value: '=' },
-//   { type: 'VALUE', value: 34 },
-//   { type: 'EOF', value: null },
-// ];
-
-// const parser = new RecursiveDescentParser(tokens);
-// const ast = parser.parse();
-// console.log(ast);
-
-type TokenType1 =
+// Definición de tipos de tokens
+type TokenType =
   | 'SELECT'
   | 'FROM'
   | 'WHERE'
@@ -103,31 +8,34 @@ type TokenType1 =
   | 'OPERATOR'
   | 'VALUE'
   | 'EOF';
-
-type Token1 = {
-  type: TokenType1;
-  value: any;
+type Token = {
+  type: TokenType | 'INVALID';
+  value: string | null;
 };
 
+// Clase principal RecursiveDescentParser1
 class RecursiveDescentParser1 {
   private index: number;
-  private tokens: Token1[];
+  private tokens: Token[];
 
-  constructor(tokens: Token1[]) {
+  constructor(tokens: Token[]) {
     this.index = 0;
     this.tokens = tokens;
   }
 
-  private currentToken(): Token1 {
+  // Obtener el token actual
+  private currentToken(): Token {
     return this.tokens[this.index];
   }
 
-  private nextToken(): Token1 {
+  // Pasar al siguiente token
+  private nextToken(): Token {
     this.index++;
     return this.currentToken();
   }
 
-  private expectToken(expectedType: string): Token1 {
+  // Verificar si el token actual coincide con el tipo esperado
+  private expectToken(expectedType: TokenType): Token {
     const token = this.currentToken();
     if (token.type !== expectedType) {
       throw new Error(
@@ -138,11 +46,25 @@ class RecursiveDescentParser1 {
     return token;
   }
 
-  public parse(): any {
-    return this.parseSelectStatement();
+  // Iniciar el análisis
+  public parse(): boolean {
+    try {
+      return this.parseSelectStatement();
+    } catch (error) {
+      if (
+        error instanceof Error &&
+        (error.message.startsWith('Invalid token') ||
+          error.message.startsWith('Unexpected token'))
+      ) {
+        return false;
+      } else {
+        throw error;
+      }
+    }
   }
 
-  private parseSelectStatement(): any {
+  // Analizar la declaración SELECT
+  private parseSelectStatement(): boolean {
     this.expectToken('SELECT');
     this.expectToken('COLUMN_NAME');
     this.parseFromClause();
@@ -151,12 +73,14 @@ class RecursiveDescentParser1 {
     return true;
   }
 
-  private parseFromClause(): any {
+  // Analizar la cláusula FROM
+  private parseFromClause(): void {
     this.expectToken('FROM');
     this.expectToken('TABLE_NAME');
   }
 
-  private parseWhereClause(): any | null {
+  // Analizar la cláusula WHERE
+  private parseWhereClause(): null {
     if (this.currentToken().type === 'WHERE') {
       this.nextToken();
       this.parseCondition();
@@ -164,35 +88,49 @@ class RecursiveDescentParser1 {
     return null;
   }
 
-  private parseCondition(): any {
+  // Analizar la condición en la cláusula WHERE
+  private parseCondition(): void {
     this.expectToken('COLUMN_NAME');
     this.expectToken('OPERATOR');
     this.expectToken('VALUE');
   }
 }
 
-// Example usage
-const input = 'SELECT column1 FROM table2 WHERE column2 = 34';
+// Ejemplo de uso
+const input = 'SELECT column1 FROM table2 WHERE column2 = 34'; // input inválido
 const tokens1 = tokenize(input);
 const parser1 = new RecursiveDescentParser1(tokens1);
 const isValid = parser1.parse();
 console.log(isValid);
 
-function tokenize(input: string): Token1[] {
+// Función para tokenizar la entrada
+function tokenize(input: string): Token[] {
   const regex =
     /\s*(SELECT|FROM|WHERE|[A-Za-z_][A-Za-z0-9_]*|<=|>=|<>|!=|<|>|=|\d+)\s*/g;
-  const tokens: Token1[] = [];
-  let match;
+  const tokens: Token[] = [];
+  let match: RegExpExecArray | null;
+  let previousToken: Token | undefined;
+
   while ((match = regex.exec(input)) !== null) {
-    const type = getTokenType(match[1]);
-    const value = match[1];
-    tokens.push({ type, value });
+    try {
+      const type = getTokenType(match[1], previousToken);
+      const value = match[1];
+      tokens.push({ type, value });
+      previousToken = { type, value };
+    } catch (error) {
+      if (error instanceof Error && error.message.startsWith('Invalid token')) {
+        tokens.push({ type: 'INVALID', value: match[1] });
+        break;
+      } else {
+        throw error;
+      }
+    }
   }
   tokens.push({ type: 'EOF', value: null });
   return tokens;
 }
-
-function getTokenType(token: string): TokenType1 {
+// Función para obtener el tipo de token
+function getTokenType(token: string, previousToken?: Token): TokenType {
   switch (token.toUpperCase()) {
     case 'SELECT':
       return 'SELECT';
@@ -210,7 +148,10 @@ function getTokenType(token: string): TokenType1 {
       return 'OPERATOR';
     default:
       if (/^[A-Za-z_][A-Za-z0-9_]*$/.test(token)) {
-        return /[A-Z]/.test(token.charAt(0)) ? 'COLUMN_NAME' : 'TABLE_NAME';
+        if (previousToken && previousToken.type === 'FROM') {
+          return 'TABLE_NAME';
+        }
+        return 'COLUMN_NAME';
       } else if (/^\d+$/.test(token)) {
         return 'VALUE';
       } else {
