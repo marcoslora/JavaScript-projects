@@ -1,2 +1,2 @@
-# Course Material and FAQ for my Complete JavaScript Course
+# Course Material and my JavaScript journey
 
