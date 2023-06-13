@@ -177,24 +177,24 @@ const whereAmI = function () {
 //   }, 2000);
 //   whereAmI(19.037, 72.873);
 // });
-console.log('Inicio');
-setTimeout((console.log('Time'), 0));
+// console.log('Inicio');
+// setTimeout((console.log('Time'), 0));
 
-Promise.resolve('abc').then(x => console.log(x));
-console.log('Final');
+// Promise.resolve('abc').then(x => console.log(x));
+// console.log('Final');
 
-const lotteryPromise = new Promise(function (resolve, reject) {
-  console.log('Lottery draw is happening');
-  setTimeout(function () {
-    const number = Math.random();
-    if (number >= 0.5) {
-      resolve(`You WIN 💰 ${number}`);
-    } else {
-      reject(new Error('You lost your money 💩'));
-    }
-  }, 2000);
-});
-lotteryPromise.then(res => console.log(res)).catch(err => console.error(err));
+// const lotteryPromise = new Promise(function (resolve, reject) {
+//   console.log('Lottery draw is happening');
+//   setTimeout(function () {
+//     const number = Math.random();
+//     if (number >= 0.5) {
+//       resolve(`You WIN 💰 ${number}`);
+//     } else {
+//       reject(new Error('You lost your money 💩'));
+//     }
+//   }, 2000);
+// });
+// lotteryPromise.then(res => console.log(res)).catch(err => console.error(err));
 
 const getPosition = function () {
   return new Promise(function (resolve, reject) {
@@ -206,3 +206,138 @@ const getPosition = function () {
   });
 };
 // btn.addEventListener('click', whereAmI);
+const imagesContainer = document.querySelector('.images');
+const createImage = function (imgPath) {
+  return new Promise(function (resolve, reject) {
+    const image = document.createElement('img');
+    image.src = imgPath;
+    image.addEventListener('load', function () {
+      imagesContainer.append(image);
+      resolve(image);
+    });
+    image.addEventListener('error', function () {
+      reject(new Error('Image not found'));
+    });
+  });
+};
+// let currentImage;
+// createImage('img/img-1.jpg')
+//   .then(img => {
+//     currentImage = img;
+//     console.log('Image 1 loaded');
+//     return wait(2);
+//   })
+//   .then(() => {
+//     currentImage.style.display = 'none';
+//     return createImage('img/img-2.jpg');
+//   })
+//   .then(img => {
+//     currentImage = img;
+//     console.log('Image 2 loaded');
+//     return wait(2);
+//   })
+//   .then(() => {
+//     currentImage.style.display = 'none';
+//   });
+function wait(seconds) {
+  return new Promise(resolve => {
+    setTimeout(resolve, seconds * 1000);
+  });
+}
+
+const loadNPause = async function () {
+  try {
+    let img = await createImage('img/img-1.jpg');
+    console.log('Image 1 loaded');
+    await wait(2);
+    img.style.display = 'none';
+    img = await createImage('img/img-2.jpg');
+    console.log('Image 2 loaded');
+    await wait(2);
+    img.style.display = 'none';
+    img = await createImage('img/img-3.jpg');
+    console.log('Image 3 loaded');
+  } catch (err) {
+    console.error(err);
+  }
+};
+// loadNPause();
+
+const whereAmI2 = async function () {
+  try {
+    const pos = await getPosition();
+    const { latitude: lat, longitude: lng } = pos.coords;
+    const resGeo = await fetch(
+      `https://geocode.xyz/${lat},${lng}?geoit=json&auth=130881462529601392072x108828`
+    );
+    if (!resGeo.ok) throw new Error('Problem getting location data');
+    const dataGeo = await resGeo.json();
+    const res = await fetch(
+      `https://restcountries.com/v3.1/name/${dataGeo.country}`
+    );
+    if (!res.ok) throw new Error('Problem getting country');
+    const data = await res.json();
+    renderCountry(data[0]);
+    return `You are in ${dataGeo.city}, ${dataGeo.country}`;
+  } catch (err) {
+    console.error(err);
+    renderError(`💥 ${err.message}`);
+    throw err;
+  }
+};
+// whereAmI2()
+//   .then(city => console.log(city))
+//   .catch(err => console.error(err))
+//   .finally(() => console.log('Finished getting location'));
+
+(async function () {
+  try {
+    const city = await whereAmI2();
+    console.log(city);
+  } catch (err) {
+    console.error(err);
+  }
+  console.log('Finished getting location');
+})();
+
+const get3Countries = async function (c1, c2, c3) {
+  try {
+    // const [data1] = await getJson(`https://restcountries.com/v3.1/name/${c1}`);
+    // const [data2] = await getJson(`https://restcountries.com/v3.1/name/${c2}`);
+    // const [data3] = await getJson(`https://restcountries.com/v3.1/name/${c3}`);
+    // console.log(data1.capital, data2.capital, data3.capital);
+
+    const data = await Promise.all([
+      getJson(`https://restcountries.com/v3.1/name/${c1}`),
+      getJson(`https://restcountries.com/v3.1/name/${c2}`),
+      getJson(`https://restcountries.com/v3.1/name/${c3}`),
+    ]);
+    console.log(data.map(d => d[0].capital));
+  } catch (err) {
+    console.error(err);
+  }
+};
+get3Countries('portugal', 'canada', 'usa');
+
+const test1 = new Promise(function (resolve, reject) {
+  resolve('Si');
+});
+
+test1.then(res => console.log(res)).catch(err => console.error(err));
+
+const timeout = function (sec) {
+  return new Promise(function (_, reject) {
+    setTimeout(function () {
+      reject(new Error('Request took too long'));
+    }, sec * 1000);
+  });
+};
+Promise.race([getJson(`https://restcountries.com/v3.1/name/italy`), timeout(2)])
+  .then(res => console.log(res[0]))
+  .catch(err => console.error(err));
+
+Promise.allSettled([
+  Promise.resolve('Success'),
+  Promise.reject('Error'),
+  Promise.resolve('Another success'),
+]).then(res => console.log(res));
